@@ -177,7 +177,7 @@ class Plugin_Name extends WP_Widget {
       $this->load_file(PLUGIN_NAME, '/' . PLUGIN_SLUG . '/js/admin.js', true);
 			$this->load_file(PLUGIN_NAME, '/' . PLUGIN_SLUG . '/css/admin.css');
 		} else { 
-      $this->load_file(PLUGIN_NAME, '/' . PLUGIN_SLUG . '/js/admin.css', true);
+      $this->load_file(PLUGIN_NAME, '/' . PLUGIN_SLUG . '/js/widget.js', true);
 			$this->load_file(PLUGIN_NAME, '/' . PLUGIN_SLUG . '/css/widget.css');
 		} // end if/else
 	} // end register_scripts_and_styles
