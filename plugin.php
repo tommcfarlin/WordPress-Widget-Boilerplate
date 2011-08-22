@@ -28,6 +28,16 @@ License:
 // TODO: change 'Plugin_Name' to the name of your actual plugin
 class Plugin_Name extends WP_Widget {
 
+	/**
+	 * TODO: update these values to reflect the name, locale, and slug
+	 * of your plugin.
+	 */
+
+	const name = 'Plugin Name';
+	const locale = 'plugin-name-locale';
+	const slug = 'plugin-name-slug';
+	
+
 	/*--------------------------------------------------*/
 	/* Constructor
 	/*--------------------------------------------------*/
@@ -37,23 +47,20 @@ class Plugin_Name extends WP_Widget {
 	 * the widget, loads localization files, and includes necessary scripts and
 	 * styles.
 	 */
-  // TODO: This should match the title given in the class definition above.
+  	// TODO: This should match the title given in the class definition above.
 	function Plugin_Name() {
 
-    // Define constnats used throughout the plugin
-    $this->init_plugin_constants();
-  
-    // TODO: update classname and description
+		load_plugin_textdomain(self::locale, false, dirname(plugin_basename( __FILE__ ) ) . '/lang/' );
+
+    	// TODO: update classname and description
 		$widget_opts = array (
-			'classname' => PLUGIN_NAME, 
-			'description' => __('Short description of the plugin goes here.', PLUGIN_LOCALE)
+			'classname' => self::name, 
+			'description' => __('Short description of the plugin goes here.', self::locale)
 		);	
+		$this->WP_Widget(self::slug, __(self::name, self::locale), $widget_opts);
 		
-		$this->WP_Widget(PLUGIN_SLUG, __(PLUGIN_NAME, PLUGIN_LOCALE), $widget_opts);
-		load_plugin_textdomain(PLUGIN_LOCALE, false, dirname(plugin_basename( __FILE__ ) ) . '/lang/' );
-		
-    // Load JavaScript and stylesheets
-    $this->register_scripts_and_styles();
+    	// Load JavaScript and stylesheets
+    	$this->register_scripts_and_styles();
 		
 	} // end constructor
 
@@ -73,10 +80,10 @@ class Plugin_Name extends WP_Widget {
 		
 		echo $before_widget;
 		
-    // TODO: This is where you retrieve the widget values
+    	// TODO: This is where you retrieve the widget values
     
 		// Display the widget
-		include(WP_PLUGIN_DIR . '/' . PLUGIN_SLUG . '/views/widget.php');
+		include(WP_PLUGIN_DIR . '/' . self::slug . '/views/widget.php');
 		
 		echo $after_widget;
 		
@@ -92,7 +99,7 @@ class Plugin_Name extends WP_Widget {
 		
 		$instance = $old_instance;
 		
-    // TODO Update the widget with the new values
+    	// TODO Update the widget with the new values
     
 		return $instance;
 		
@@ -105,7 +112,7 @@ class Plugin_Name extends WP_Widget {
 	 */
 	function form($instance) {
 	
-    // TODO define default values for your variables
+    	// TODO define default values for your variables
 		$instance = wp_parse_args(
 			(array)$instance,
 			array(
@@ -113,60 +120,16 @@ class Plugin_Name extends WP_Widget {
 			)
 		);
 	
-    // TODO store the values of widget in a variable
+    	// TODO store the values of widget in a variable
 		
 		// Display the admin form
-    include(WP_PLUGIN_DIR . '/' . PLUGIN_SLUG . '/views/admin.php');
+    	include(WP_PLUGIN_DIR . '/' . self::slug . '/views/admin.php');
 		
 	} // end form
 	
 	/*--------------------------------------------------*/
 	/* Private Functions
 	/*--------------------------------------------------*/
-	
-  /**
-   * Initializes constants used for convenience throughout 
-   * the plugin.
-   */
-  private function init_plugin_constants() {
-    
-    /* TODO
-     * 
-     * This provides the unique identifier for your plugin used in
-     * localizing the strings used throughout.
-     * 
-     * For example: wordpress-widget-boilerplate-locale.
-     */
-    if(!defined('PLUGIN_LOCALE')) {
-      define('PLUGIN_LOCALE', 'plugin-name-locale');
-    } // end if
-    
-    /* TODO
-     * 
-     * Define this as the name of your plugin. This is what shows
-     * in the Widgets area of WordPress.
-     * 
-     * For example: WordPress Widget Boilerplate.
-     */
-    if(!defined('PLUGIN_NAME')) {
-      define('PLUGIN_NAME', 'Plugin Name');
-    } // end if
-    
-    /* TODO
-     * 
-     * this is the slug of your plugin used in initializing it with
-     * the WordPress API.
-     
-     * This should also be the
-     * directory in which your plugin resides. Use hyphens.
-     * 
-     * For example: wordpress-widget-boilerplate
-     */
-    if(!defined('PLUGIN_SLUG')) {
-      define('PLUGIN_SLUG', 'plugin-name-slug');
-    } // end if
-  
-  } // end init_plugin_constants
   
 	/**
 	 * Registers and enqueues stylesheets for the administration panel and the
@@ -174,11 +137,11 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function register_scripts_and_styles() {
 		if(is_admin()) {
-      $this->load_file(PLUGIN_NAME, '/' . PLUGIN_SLUG . '/js/admin.js', true);
-			$this->load_file(PLUGIN_NAME, '/' . PLUGIN_SLUG . '/css/admin.css');
+      		$this->load_file(PLUGIN_NAME, '/' . self::slug . '/js/admin.js', true);
+			$this->load_file(PLUGIN_NAME, '/' . self::slug . '/css/admin.css');
 		} else { 
-      $this->load_file(PLUGIN_NAME, '/' . PLUGIN_SLUG . '/js/widget.js', true);
-			$this->load_file(PLUGIN_NAME, '/' . PLUGIN_SLUG . '/css/widget.css');
+      		$this->load_file(PLUGIN_NAME, '/' . self::slug . '/js/widget.js', true);
+			$this->load_file(PLUGIN_NAME, '/' . self::slug . '/css/widget.css');
 		} // end if/else
 	} // end register_scripts_and_styles
 
@@ -191,7 +154,7 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function load_file($name, $file_path, $is_script = false) {
 		
-    $url = WP_PLUGIN_URL . $file_path;
+    	$url = WP_PLUGIN_URL . $file_path;
 		$file = WP_PLUGIN_DIR . $file_path;
     
 		if(file_exists($file)) {
@@ -207,5 +170,6 @@ class Plugin_Name extends WP_Widget {
 	} // end load_file
 	
 } // end class
-add_action('widgets_init', create_function('', 'register_widget("Plugin_Name");')); // TODO remember to change this to match the class definition above
+add_action('widgets_init', create_function('', 'register_widget("Plugin_Name");')); 
+// TODO remember to change this to match the class definition above
 ?>
