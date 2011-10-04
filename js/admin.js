@@ -1,3 +1,4 @@
-jQuery(function($) {
-  // Place your administration-specific code here
-});
+(function($) {
+  // Place your public facing JavaScript here
+}(jQuery));
+
