@@ -1,4 +1,4 @@
 (function($) {
-  // Place your public facing JavaScript here
+  // Place your administration-specific JavaScript here
 }(jQuery));
 
