@@ -50,7 +50,7 @@ class Plugin_Name extends WP_Widget {
   	// TODO: This should match the title given in the class definition above.
 	function Plugin_Name() {
 
-		load_plugin_textdomain(self::locale, false, dirname(plugin_basename( __FILE__ ) ) . '/lang/' );
+		load_plugin_textdomain(self::locale, false, plugin_dir_path( __FILE__ ) . '/lang/' );
 
     	// TODO: update classname and description
 		$widget_opts = array (
@@ -83,7 +83,7 @@ class Plugin_Name extends WP_Widget {
     	// TODO: This is where you retrieve the widget values
     
 		// Display the widget
-		include(WP_PLUGIN_DIR . '/' . self::slug . '/views/widget.php');
+		include(plugin_dir(__FILE__) . '/' . self::slug . '/views/widget.php');
 		
 		echo $after_widget;
 		
@@ -123,7 +123,7 @@ class Plugin_Name extends WP_Widget {
     	// TODO store the values of widget in a variable
 		
 		// Display the admin form
-    	include(WP_PLUGIN_DIR . '/' . self::slug . '/views/admin.php');
+    	include(plugin_dir(__FILE__) . '/' . self::slug . '/views/admin.php');
 		
 	} // end form
 	
@@ -154,8 +154,8 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function load_file($name, $file_path, $is_script = false) {
 		
-    	$url = WP_PLUGIN_URL . $file_path;
-		$file = WP_PLUGIN_DIR . $file_path;
+    $url = plugins_url( $file_path, __FILE__ );
+		$file = plugin_dir_path( __FILE__ ).$file_path;
     
 		if(file_exists($file)) {
 			if($is_script) {
