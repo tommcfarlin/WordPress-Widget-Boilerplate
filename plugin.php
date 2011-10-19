@@ -123,7 +123,7 @@ class Plugin_Name extends WP_Widget {
     	// TODO store the values of widget in a variable
 		
 		// Display the admin form
-    	include(plugin_dir_path(__FILE__) . '/' . self::slug . '/views/admin.php');
+    	include(plugin_dir_path(__FILE__) .'/views/admin.php');
 		
 	} // end form
 	
@@ -137,11 +137,11 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function register_scripts_and_styles() {
 		if(is_admin()) {
-      		$this->load_file(PLUGIN_NAME, '/' . self::slug . '/js/admin.js', true);
-			$this->load_file(PLUGIN_NAME, '/' . self::slug . '/css/admin.css');
+      		$this->load_file(PLUGIN_NAME, 'js/admin.js', true);
+			$this->load_file(PLUGIN_NAME, 'css/admin.css');
 		} else { 
-      		$this->load_file(PLUGIN_NAME, '/' . self::slug . '/js/widget.js', true);
-			$this->load_file(PLUGIN_NAME, '/' . self::slug . '/css/widget.css');
+      		$this->load_file(PLUGIN_NAME, 'js/widget.js', true);
+			$this->load_file(PLUGIN_NAME, 'css/widget.css');
 		} // end if/else
 	} // end register_scripts_and_styles
 
