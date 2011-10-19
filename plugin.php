@@ -50,14 +50,14 @@ class Plugin_Name extends WP_Widget {
   	// TODO: This should match the title given in the class definition above.
 	function Plugin_Name() {
 
-		load_plugin_textdomain(self::locale, false, plugin_dir_path( __FILE__ ) . '/lang/' );
+		load_plugin_textdomain('plugin-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
 
     	// TODO: update classname and description
 		$widget_opts = array (
 			'classname' => self::name, 
 			'description' => __('Short description of the plugin goes here.', self::locale)
 		);	
-		$this->WP_Widget(self::slug, __(self::name, self::locale), $widget_opts);
+		$this->WP_Widget(self::slug, __(self::name, 'plugin-name-locale'), $widget_opts);
 		
     	// Load JavaScript and stylesheets
     	$this->register_scripts_and_styles();
@@ -83,7 +83,7 @@ class Plugin_Name extends WP_Widget {
     	// TODO: This is where you retrieve the widget values
     
 		// Display the widget
-		include(plugin_dir(__FILE__) . '/' . self::slug . '/views/widget.php');
+		include(plugin_dir_path(__FILE__) . '/' . self::slug . '/views/widget.php');
 		
 		echo $after_widget;
 		
@@ -123,7 +123,7 @@ class Plugin_Name extends WP_Widget {
     	// TODO store the values of widget in a variable
 		
 		// Display the admin form
-    	include(plugin_dir(__FILE__) . '/' . self::slug . '/views/admin.php');
+    	include(plugin_dir_path(__FILE__) . '/' . self::slug . '/views/admin.php');
 		
 	} // end form
 	
