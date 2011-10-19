@@ -50,14 +50,14 @@ class Plugin_Name extends WP_Widget {
   	// TODO: This should match the title given in the class definition above.
 	function Plugin_Name() {
 
-		load_plugin_textdomain(self::locale, false, plugin_dir_path( __FILE__ ) . '/lang/' );
+		load_plugin_textdomain( self::locale, false, plugin_dir_path( __FILE__ ) . '/lang/' );
 
     	// TODO: update classname and description
-		$widget_opts = array (
+		$widget_opts = array(
 			'classname' => self::name, 
-			'description' => __('Short description of the plugin goes here.', self::locale)
+			'description' => __( 'Short description of the plugin goes here.', self::locale )
 		);	
-		$this->WP_Widget(self::slug, __(self::name, self::locale), $widget_opts);
+		$this->WP_Widget( self::slug, __( self::name, self::locale ), $widget_opts );
 		
     	// Load JavaScript and stylesheets
     	$this->register_scripts_and_styles();
@@ -74,16 +74,16 @@ class Plugin_Name extends WP_Widget {
 	 * @args			The array of form elements
 	 * @instance
 	 */
-	function widget($args, $instance) {
+	function widget( $args, $instance ) {
 	
-		extract($args, EXTR_SKIP);
+		extract( $args, EXTR_SKIP );
 		
 		echo $before_widget;
 		
     	// TODO: This is where you retrieve the widget values
     
 		// Display the widget
-		include(plugin_dir(__FILE__) . '/' . self::slug . '/views/widget.php');
+		include( plugin_dir( __FILE__ ) . '/' . self::slug . '/views/widget.php' );
 		
 		echo $after_widget;
 		
@@ -95,7 +95,7 @@ class Plugin_Name extends WP_Widget {
 	 * @new_instance	The previous instance of values before the update.
 	 * @old_instance	The new instance of values to be generated via the update.
 	 */
-	function update($new_instance, $old_instance) {
+	function update( $new_instance, $old_instance ) {
 		
 		$instance = $old_instance;
 		
@@ -110,11 +110,11 @@ class Plugin_Name extends WP_Widget {
 	 *
 	 * @instance	The array of keys and values for the widget.
 	 */
-	function form($instance) {
+	function form( $instance ) {
 	
     	// TODO define default values for your variables
 		$instance = wp_parse_args(
-			(array)$instance,
+			(array) $instance,
 			array(
 				'' => ''
 			)
@@ -123,7 +123,7 @@ class Plugin_Name extends WP_Widget {
     	// TODO store the values of widget in a variable
 		
 		// Display the admin form
-    	include(plugin_dir(__FILE__) . '/' . self::slug . '/views/admin.php');
+    	include( plugin_dir( __FILE__ ) . '/' . self::slug . '/views/admin.php' );
 		
 	} // end form
 	
@@ -136,12 +136,12 @@ class Plugin_Name extends WP_Widget {
 	 * public facing site.
 	 */
 	private function register_scripts_and_styles() {
-		if(is_admin()) {
-      		$this->load_file(PLUGIN_NAME, '/' . self::slug . '/js/admin.js', true);
-			$this->load_file(PLUGIN_NAME, '/' . self::slug . '/css/admin.css');
+		if ( is_admin() ) {
+      $this->load_file( PLUGIN_NAME, '/' . self::slug . '/js/admin.js', true );
+			$this->load_file( PLUGIN_NAME, '/' . self::slug . '/css/admin.css' );
 		} else { 
-      		$this->load_file(PLUGIN_NAME, '/' . self::slug . '/js/widget.js', true);
-			$this->load_file(PLUGIN_NAME, '/' . self::slug . '/css/widget.css');
+      $this->load_file( PLUGIN_NAME, '/' . self::slug . '/js/widget.js', true );
+			$this->load_file( PLUGIN_NAME, '/' . self::slug . '/css/widget.css' );
 		} // end if/else
 	} // end register_scripts_and_styles
 
@@ -152,24 +152,24 @@ class Plugin_Name extends WP_Widget {
 	 * @file_path		The path to the actual file
 	 * @is_script		Optional argument for if the incoming file_path is a JavaScript source file.
 	 */
-	private function load_file($name, $file_path, $is_script = false) {
+	private function load_file( $name, $file_path, $is_script = false ) {
 		
     $url = plugins_url( $file_path, __FILE__ );
-		$file = plugin_dir_path( __FILE__ ).$file_path;
+		$file = plugin_dir_path( __FILE__ ) . $file_path;
     
-		if(file_exists($file)) {
-			if($is_script) {
-				wp_register_script($name, $url);
-				wp_enqueue_script($name);
+		if ( file_exists( $file ) ) {
+			if ( $is_script ) {
+				wp_register_script( $name, $url );
+				wp_enqueue_script( $name );
 			} else {
-				wp_register_style($name, $url);
-				wp_enqueue_style($name);
+				wp_register_style( $name, $url );
+				wp_enqueue_style( $name );
 			} // end if
 		} // end if
     
 	} // end load_file
 	
 } // end class
-add_action('widgets_init', create_function('', 'register_widget("Plugin_Name");')); 
+add_action( 'widgets_init', create_function( '', 'register_widget("Plugin_Name");' ) ); 
 // TODO remember to change this to match the class definition above
 ?>
