@@ -34,7 +34,6 @@ class Plugin_Name extends WP_Widget {
 	 */
 
 	const name = 'Plugin Name';
-	const locale = 'plugin-name-locale';
 	const slug = 'plugin-name-slug';
 	
 
@@ -50,14 +49,15 @@ class Plugin_Name extends WP_Widget {
   	// TODO: This should match the title given in the class definition above.
 	function Plugin_Name() {
 
-		load_plugin_textdomain( self::locale, false, plugin_dir_path( __FILE__ ) . '/lang/' );
+		load_plugin_textdomain( 'plugin-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
 
     	// TODO: update classname and description
+    	// TODO: replace 'plugin-name-locale' to be named more plugin specific. other instances exist throughout the code, too.
 		$widget_opts = array(
 			'classname' => self::name, 
-			'description' => __( 'Short description of the plugin goes here.', self::locale )
+			'description' => __( 'Short description of the plugin goes here.', 'plugin-name-locale' )
 		);	
-		$this->WP_Widget( self::slug, __( self::name, self::locale ), $widget_opts );
+		$this->WP_Widget( self::slug, __( self::name, 'plugin-name-locale' ), $widget_opts );
 		
     	// Load JavaScript and stylesheets
     	$this->register_scripts_and_styles();
@@ -83,7 +83,7 @@ class Plugin_Name extends WP_Widget {
     	// TODO: This is where you retrieve the widget values
     
 		// Display the widget
-		include( plugin_dir( __FILE__ ) . '/' . self::slug . '/views/widget.php' );
+		include( plugin_dir_path(__FILE__) . '/views/widget.php' );
 		
 		echo $after_widget;
 		
@@ -123,7 +123,7 @@ class Plugin_Name extends WP_Widget {
     	// TODO store the values of widget in a variable
 		
 		// Display the admin form
-    	include( plugin_dir( __FILE__ ) . '/' . self::slug . '/views/admin.php' );
+    	include( plugin_dir_path(__FILE__) . '/views/admin.php' );
 		
 	} // end form
 	
@@ -137,11 +137,11 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function register_scripts_and_styles() {
 		if ( is_admin() ) {
-      $this->load_file( PLUGIN_NAME, '/' . self::slug . '/js/admin.js', true );
-			$this->load_file( PLUGIN_NAME, '/' . self::slug . '/css/admin.css' );
+			$this->load_file( plugin_dir_path(__FILE__) . '/js/admin.js', true );
+			$this->load_file( plugin_dir_path(__FILE__) . '/css/admin.css' );
 		} else { 
-      $this->load_file( PLUGIN_NAME, '/' . self::slug . '/js/widget.js', true );
-			$this->load_file( PLUGIN_NAME, '/' . self::slug . '/css/widget.css' );
+			$this->load_file( plugin_dir_path(__FILE__) . '/js/widget.js', true );
+			$this->load_file( plugin_dir_path(__FILE__) . '/css/widget.css' );
 		} // end if/else
 	} // end register_scripts_and_styles
 
@@ -154,7 +154,7 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function load_file( $name, $file_path, $is_script = false ) {
 		
-    $url = plugins_url( $file_path, __FILE__ );
+    	$url = plugins_url( $file_path, __FILE__ );
 		$file = plugin_dir_path( __FILE__ ) . $file_path;
     
 		if ( file_exists( $file ) ) {
@@ -170,6 +170,6 @@ class Plugin_Name extends WP_Widget {
 	} // end load_file
 	
 } // end class
+// TODO remember to change 'Plugin_Name' to match the class name definition
 add_action( 'widgets_init', create_function( '', 'register_widget("Plugin_Name");' ) ); 
-// TODO remember to change this to match the class definition above
 ?>
