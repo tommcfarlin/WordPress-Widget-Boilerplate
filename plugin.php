@@ -137,11 +137,11 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function register_scripts_and_styles() {
 		if ( is_admin() ) {
-			$this->load_file( plugin_dir_path(__FILE__) . '/js/admin.js', true );
-			$this->load_file( plugin_dir_path(__FILE__) . '/css/admin.css' );
+			$this->load_file( self::slug . '-admin-script', '/js/admin.js', true );
+			$this->load_file( self::slug . '-admin-style', '/css/admin.css' );
 		} else { 
-			$this->load_file( plugin_dir_path(__FILE__) . '/js/widget.js', true );
-			$this->load_file( plugin_dir_path(__FILE__) . '/css/widget.css' );
+			$this->load_file( self::slug . '-script', '/js/widget.js', true );
+			$this->load_file( self::slug . '-style', '/css/widget.css' );
 		} // end if/else
 	} // end register_scripts_and_styles
 
@@ -154,12 +154,12 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function load_file( $name, $file_path, $is_script = false ) {
 		
-    	$url = plugins_url( $file_path, __FILE__ );
-		$file = plugin_dir_path( __FILE__ ) . $file_path;
-    
-		if ( file_exists( $file ) ) {
-			if ( $is_script ) {
-				wp_register_script( $name, $url );
+		$url = WP_PLUGIN_URL . '/' . self::slug . '/' . $file_path;
+		$file = plugin_dir_path(__FILE__) . $file_path;
+
+		if( file_exists( $file ) ) {
+			if( $is_script ) {
+				wp_register_script( $name, $url, array('jquery') );
 				wp_enqueue_script( $name );
 			} else {
 				wp_register_style( $name, $url );
