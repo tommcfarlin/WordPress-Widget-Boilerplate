@@ -154,8 +154,8 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function load_file( $name, $file_path, $is_script = false ) {
 		
-		$url = WP_PLUGIN_URL . '/' . self::slug . '/' . $file_path;
-		$file = plugin_dir_path(__FILE__) . $file_path;
+		$url = plugins_url($file_path, __FILE__);
+		$file = plugins_dir_path(__FILE__) . $file_path;
 
 		if( file_exists( $file ) ) {
 			if( $is_script ) {
