@@ -1,3 +1,5 @@
 (function($) {
-  // Place your public facing JavaScript here
-}(jQuery));
+	$(function() {
+		// Place your administration-specific JavaScript here
+	});
+})(jQuery);

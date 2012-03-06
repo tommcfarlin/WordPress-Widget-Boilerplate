@@ -9,7 +9,7 @@ Author URI: TODO
 Author Email: TODO
 License:
 
-  Copyright 2011 TODO (email@domain.com)
+  Copyright 2012 TODO (email@domain.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License, version 2, as 
@@ -28,15 +28,6 @@ License:
 // TODO: change 'Plugin_Name' to the name of your actual plugin
 class Plugin_Name extends WP_Widget {
 
-	/**
-	 * TODO: update these values to reflect the name, locale, and slug
-	 * of your plugin.
-	 */
-
-	const name = 'Plugin Name';
-	const slug = 'plugin-name-slug';
-	
-
 	/*--------------------------------------------------*/
 	/* Constructor
 	/*--------------------------------------------------*/
@@ -47,21 +38,24 @@ class Plugin_Name extends WP_Widget {
 	 * styles.
 	 */
   	// TODO: This should match the title given in the class definition above.
-	function Plugin_Name() {
-
+	public function __construct() {
+	
 		load_plugin_textdomain( 'plugin-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
-
-    	// TODO: update classname and description
+		
+		// TODO: update classname and description
     	// TODO: replace 'plugin-name-locale' to be named more plugin specific. other instances exist throughout the code, too.
-		$widget_opts = array(
-			'classname' => self::name, 
-			'description' => __( 'Short description of the plugin goes here.', 'plugin-name-locale' )
-		);	
-		$this->WP_Widget( self::slug, __( self::name, 'plugin-name-locale' ), $widget_opts );
+		parent::__construct(
+			'widget-name-id',
+			'Widget_Name',
+			array(
+				'classname'		=>	'widget-name-class',
+				'description'	=>	__( 'Short description of the widget goes here.', 'plugin-name-locale' )
+			)
+		);
 		
-    	// Load JavaScript and stylesheets
-    	$this->register_scripts_and_styles();
-		
+		// Load JavaScript and stylesheets
+		$this->register_scripts_and_styles();
+	
 	} // end constructor
 
 	/*--------------------------------------------------*/
@@ -72,7 +66,7 @@ class Plugin_Name extends WP_Widget {
 	 * Outputs the content of the widget.
 	 *
 	 * @args			The array of form elements
-	 * @instance
+	 * @instance		The current instance of the widget
 	 */
 	function widget( $args, $instance ) {
 	
@@ -116,7 +110,7 @@ class Plugin_Name extends WP_Widget {
 		$instance = wp_parse_args(
 			(array) $instance,
 			array(
-				'' => ''
+				''	=>	''
 			)
 		);
 	
@@ -136,13 +130,21 @@ class Plugin_Name extends WP_Widget {
 	 * public facing site.
 	 */
 	private function register_scripts_and_styles() {
+	
 		if ( is_admin() ) {
-			$this->load_file( self::slug . '-admin-script', '/js/admin.js', true );
-			$this->load_file( self::slug . '-admin-style', '/css/admin.css' );
+		
+			// TODO remember to rename 'widget-slug-' to the name of the widget
+			$this->load_file( 'widget-slug-admin-script', '/js/admin.js', true );
+			$this->load_file( 'widget-slug-admin-style', '/css/admin.css' );
+			
 		} else { 
-			$this->load_file( self::slug . '-script', '/js/widget.js', true );
-			$this->load_file( self::slug . '-style', '/css/widget.css' );
+		
+			// TODO remember to rename 'widget-slug-' to the name of the widget
+			$this->load_file( 'widget-slug-script', '/js/widget.js', true );
+			$this->load_file( 'widget-slug-style', '/css/widget.css' );
+			
 		} // end if/else
+		
 	} // end register_scripts_and_styles
 
 	/**
@@ -154,17 +156,23 @@ class Plugin_Name extends WP_Widget {
 	 */
 	private function load_file( $name, $file_path, $is_script = false ) {
 		
-		$url = plugins_url($file_path, __FILE__);
-		$file = plugins_dir_path(__FILE__) . $file_path;
+		$url = plugins_url( $file_path, __FILE__ ) ;
+		$file = plugin_dir_path( __FILE__ ) . $file_path;
 
 		if( file_exists( $file ) ) {
+		
 			if( $is_script ) {
-				wp_register_script( $name, $url, array('jquery') );
+			
+				wp_register_script( $name, $url, array( 'jquery' ) );
 				wp_enqueue_script( $name );
+				
 			} else {
+			
 				wp_register_style( $name, $url );
 				wp_enqueue_style( $name );
+				
 			} // end if
+			
 		} // end if
     
 	} // end load_file
