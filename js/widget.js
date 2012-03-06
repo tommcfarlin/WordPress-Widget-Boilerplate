@@ -1,5 +1,5 @@
 (function($) {
 	$(function() {
-		// Place your administration-specific JavaScript here
+		// Place your public-facing JavaScript here
 	});
 })(jQuery);
