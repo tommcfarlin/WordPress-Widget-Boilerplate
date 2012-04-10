@@ -42,6 +42,9 @@ class Plugin_Name extends WP_Widget {
 	
 		load_plugin_textdomain( 'plugin-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
 		
+		register_activation_hook( __FILE__, array( &$this, 'activate' ) );
+		register_deactivation_hook( __FILE__, array( &$this, 'deactivate' ) );
+		
 		// TODO: update classname and description
     	// TODO: replace 'plugin-name-locale' to be named more plugin specific. other instances exist throughout the code, too.
 		parent::__construct(
@@ -59,7 +62,7 @@ class Plugin_Name extends WP_Widget {
 	} // end constructor
 
 	/*--------------------------------------------------*/
-	/* API Functions
+	/* Widget API Functions
 	/*--------------------------------------------------*/
 	
 	/**
@@ -120,6 +123,28 @@ class Plugin_Name extends WP_Widget {
     	include( plugin_dir_path(__FILE__) . '/views/admin.php' );
 		
 	} // end form
+
+	/*--------------------------------------------------*/
+	/* Public Functions
+	/*--------------------------------------------------*/
+	
+	/**
+	 * Fired when the plugin is activated.
+	 *
+	 * @params	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog 
+	 */
+	function activate( $network_wide ) {
+		// TODO define activation functionality here
+	} // end activate
+	
+	/**
+	 * Fired when the plugin is deactivated.
+	 *
+	 * @params	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog 
+	 */
+	function deactivate( $network_wide ) {
+		// TODO define deactivation functionality here		
+	} // end deactivate
 	
 	/*--------------------------------------------------*/
 	/* Private Functions
