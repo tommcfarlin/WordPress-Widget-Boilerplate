@@ -25,8 +25,8 @@ License:
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// TODO: change 'Plugin_Name' to the name of your actual plugin
-class Plugin_Name extends WP_Widget {
+// TODO: change 'Widget_Name' to the name of your actual plugin
+class Widget_Name extends WP_Widget {
 
 	/*--------------------------------------------------*/
 	/* Constructor
@@ -37,28 +37,33 @@ class Plugin_Name extends WP_Widget {
 	 * the widget, loads localization files, and includes necessary scripts and
 	 * styles.
 	 */
-  	// TODO: This should match the title given in the class definition above.
 	public function __construct() {
 	
-		load_plugin_textdomain( 'plugin-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
+		// TODO be sure to change 'widget-name' to the name of *your* plugin
+		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
 		
 		register_activation_hook( __FILE__, array( &$this, 'activate' ) );
 		register_deactivation_hook( __FILE__, array( &$this, 'deactivate' ) );
 		
 		// TODO: update classname and description
-    	// TODO: replace 'plugin-name-locale' to be named more plugin specific. other instances exist throughout the code, too.
+    	// TODO: replace 'widget-name-locale' to be named more plugin specific. other instances exist throughout the code, too.
 		parent::__construct(
 			'widget-name-id',
 			'Widget_Name',
 			array(
 				'classname'		=>	'widget-name-class',
-				'description'	=>	__( 'Short description of the widget goes here.', 'plugin-name-locale' )
+				'description'	=>	__( 'Short description of the widget goes here.', 'widget-name-locale' )
 			)
 		);
 		
-		// Load JavaScript and stylesheets
-		$this->register_scripts_and_styles();
+		// Register admin styles and scripts
+		add_action( 'admin_print_styles', array( &$this, 'register_admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( &$this, 'register_admin_scripts' ) );
 	
+		// Register site styles and scripts
+		add_action( 'wp_enqueue_scripts', array( &$this, 'register_widget_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( &$this, 'register_widget_scripts' ) );
+		
 	} // end constructor
 
 	/*--------------------------------------------------*/
@@ -71,7 +76,7 @@ class Plugin_Name extends WP_Widget {
 	 * @args			The array of form elements
 	 * @instance		The current instance of the widget
 	 */
-	function widget( $args, $instance ) {
+	public function widget( $args, $instance ) {
 	
 		extract( $args, EXTR_SKIP );
 		
@@ -92,7 +97,7 @@ class Plugin_Name extends WP_Widget {
 	 * @new_instance	The previous instance of values before the update.
 	 * @old_instance	The new instance of values to be generated via the update.
 	 */
-	function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 		
 		$instance = $old_instance;
 		
@@ -107,7 +112,7 @@ class Plugin_Name extends WP_Widget {
 	 *
 	 * @instance	The array of keys and values for the widget.
 	 */
-	function form( $instance ) {
+	public function form( $instance ) {
 	
     	// TODO define default values for your variables
 		$instance = wp_parse_args(
@@ -133,7 +138,7 @@ class Plugin_Name extends WP_Widget {
 	 *
 	 * @params	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog 
 	 */
-	function activate( $network_wide ) {
+	public function activate( $network_wide ) {
 		// TODO define activation functionality here
 	} // end activate
 	
@@ -142,67 +147,55 @@ class Plugin_Name extends WP_Widget {
 	 *
 	 * @params	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog 
 	 */
-	function deactivate( $network_wide ) {
+	public function deactivate( $network_wide ) {
 		// TODO define deactivation functionality here		
 	} // end deactivate
 	
-	/*--------------------------------------------------*/
-	/* Private Functions
-	/*--------------------------------------------------*/
-  
 	/**
-	 * Registers and enqueues stylesheets for the administration panel and the
-	 * public facing site.
+	 * Registers and enqueues admin-specific styles.
 	 */
-	private function register_scripts_and_styles() {
+	public function register_admin_styles() {
 	
-		if ( is_admin() ) {
-		
-			// TODO remember to rename 'widget-slug-' to the name of the widget
-			$this->load_file( 'widget-slug-admin-script', '/js/admin.js', true );
-			$this->load_file( 'widget-slug-admin-style', '/css/admin.css' );
-			
-		} else { 
-		
-			// TODO remember to rename 'widget-slug-' to the name of the widget
-			$this->load_file( 'widget-slug-script', '/js/widget.js', true );
-			$this->load_file( 'widget-slug-style', '/css/widget.css' );
-			
-		} // end if/else
-		
-	} // end register_scripts_and_styles
+		// TODO change 'widget-name' to the name of your plugin
+		wp_register_script( 'widget-name-admin-styles', plugins_url( 'widget-name/css/admin.css' ) );
+		wp_enqueue_script( 'widget-name-admin-styles' );
+	
+	} // end register_admin_styles
 
 	/**
-	 * Helper function for registering and enqueueing scripts and styles.
-	 *
-	 * @name	The 	ID to register with WordPress
-	 * @file_path		The path to the actual file
-	 * @is_script		Optional argument for if the incoming file_path is a JavaScript source file.
+	 * Registers and enqueues admin-specific JavaScript.
+	 */	
+	public function register_admin_scripts() {
+	
+		// TODO change 'widget-name' to the name of your plugin
+		wp_register_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
+		wp_enqueue_script( 'widget-name-admin-script' );
+	
+	} // end register_admin_scripts
+	
+	/**
+	 * Registers and enqueues widget-specific styles.
 	 */
-	private function load_file( $name, $file_path, $is_script = false ) {
-		
-		$url = plugins_url( $file_path, __FILE__ ) ;
-		$file = plugin_dir_path( __FILE__ ) . $file_path;
-
-		if( file_exists( $file ) ) {
-		
-			if( $is_script ) {
-			
-				wp_register_script( $name, $url, array( 'jquery' ) );
-				wp_enqueue_script( $name );
-				
-			} else {
-			
-				wp_register_style( $name, $url );
-				wp_enqueue_style( $name );
-				
-			} // end if
-			
-		} // end if
-    
-	} // end load_file
+	public function register_widget_styles() {
+	
+		// TODO change 'widget-name' to the name of your plugin
+		wp_register_script( 'widget-name-widget-styles', plugins_url( 'widget-name/css/admin.css' ) );
+		wp_enqueue_script( 'widget-name-widget-styles' );
+	
+	} // end register_widget_styles
+	
+	/**
+	 * Registers and enqueues widget-specific scripts.
+	 */
+	public function register_widget_scripts() {
+	
+		// TODO change 'widget-name' to the name of your plugin
+		wp_register_script( 'widget-name-widget-script', plugins_url( 'widget-name/js/widget.js' ) );
+		wp_enqueue_script( 'widget-name-widget-script' );
+	
+	} // end register_widget_scripts
 	
 } // end class
-// TODO remember to change 'Plugin_Name' to match the class name definition
-add_action( 'widgets_init', create_function( '', 'register_widget("Plugin_Name");' ) ); 
+// TODO remember to change 'Widget_Name' to match the class name definition
+add_action( 'widgets_init', create_function( '', 'register_widget("Widget_Name");' ) ); 
 ?>
