@@ -167,7 +167,8 @@ class Widget_Name extends WP_Widget {
 	public function register_admin_scripts() {
 	
 		// TODO change 'widget-name' to the name of your plugin
-		wp_enqueue_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
+		wp_register_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
+		wp_enqueue_script( 'widget-name-admin-script' );
 	
 	} // end register_admin_scripts
 	
@@ -177,7 +178,8 @@ class Widget_Name extends WP_Widget {
 	public function register_widget_styles() {
 	
 		// TODO change 'widget-name' to the name of your plugin
-		wp_enqueue_style( 'widget-name-widget-styles', plugins_url( 'widget-name/css/admin.css' ) );
+		wp_register_style( 'widget-name-widget-styles', plugins_url( 'widget-name/css/admin.css' ) );
+		wp_enqueue_style( 'widget-name-widget-styles' );
 	
 	} // end register_widget_styles
 	
@@ -187,7 +189,8 @@ class Widget_Name extends WP_Widget {
 	public function register_widget_scripts() {
 	
 		// TODO change 'widget-name' to the name of your plugin
-		wp_enqueue_script( 'widget-name-widget-script', plugins_url( 'widget-name/js/widget.js' ) );
+		wp_register_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
+		wp_enqueue_script( 'widget-name-widget-script' );
 	
 	} // end register_widget_scripts
 	
