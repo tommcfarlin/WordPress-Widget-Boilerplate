@@ -85,6 +85,7 @@ class Widget_Name extends WP_Widget {
 		echo $before_widget;
 		
     		// TODO: This is where you retrieve the widget values
+    		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Widget Name', 'widget-name-locale' ) : $instance['title'], $instance, $this->id_base);
     
 		// Display the widget, allow take template from child or parent theme
 		if ( is_file(STYLESHEETPATH .'/widget-views/widget-name.php') ) { // Use custom template from child theme
@@ -109,6 +110,7 @@ class Widget_Name extends WP_Widget {
 		$instance = $old_instance;
 		
     		// TODO Update the widget with the new values
+    		$instance['title'] = strip_tags($new_instance['title']);
     
 		return $instance;
 		
@@ -124,7 +126,7 @@ class Widget_Name extends WP_Widget {
 		$instance = wp_parse_args(
 			(array) $instance,
 			array(
-				''	=>	''
+				'title'	=>	__( 'Widget Name', 'widget-name-locale' ),
 			)
 		);
 	
