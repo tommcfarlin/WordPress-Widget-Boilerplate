@@ -1,10 +1,13 @@
 === Widget Name ===
+
 Contributors: username1, username2 (this should be a list of wordpress.org userid's)
 Donate link: http://example.com/
-Tags: comments, spam
+Tags: widget, boilerplate
 Requires at least: 3.3.1
 Tested up to: 3.3.1
 Stable tag: 4.3
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
 
