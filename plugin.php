@@ -31,8 +31,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 // TODO: change 'Widget_Name' to the name of your actual plugin
 class Widget_Name extends WP_Widget {
+
 	/*--------------------------------------------------*/
-	/* Constructor, PHP5
+	/* Constructor
 	/*--------------------------------------------------*/
 	
 	/**
@@ -41,6 +42,7 @@ class Widget_Name extends WP_Widget {
 	 * styles.
 	 */
 	public function __construct() {
+	
 		// TODO be sure to change 'widget-name' to the name of *your* plugin
 		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
 		
@@ -49,12 +51,12 @@ class Widget_Name extends WP_Widget {
 		register_deactivation_hook( __FILE__, array( &$this, 'deactivate' ) );
 		
 		// TODO: update classname and description
-    		// TODO: replace 'widget-name-locale' to be named more plugin specific. other instances exist throughout the code, too.
+		// TODO: replace 'widget-name-locale' to be named more plugin specific. other instances exist throughout the code, too.
 		parent::__construct(
 			'widget-name-id',
 			__( 'Widget Name', 'widget-name-locale' ),
 			array(
-				'classname'	=>	'widget-name-class',
+				'classname'		=>	'widget-name-class',
 				'description'	=>	__( 'Short description of the widget goes here.', 'widget-name-locale' )
 			)
 		);
@@ -80,21 +82,16 @@ class Widget_Name extends WP_Widget {
 	 * @instance		The current instance of the widget
 	 */
 	public function widget( $args, $instance ) {
+	
 		extract( $args, EXTR_SKIP );
 		
 		echo $before_widget;
 		
-    		// TODO: This is where you retrieve the widget values
-    		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Widget Name', 'widget-name-locale' ) : $instance['title'], $instance, $this->id_base);
+    	// TODO: This is where you retrieve the widget values.
+    	// Note that this 'Title' is just an example
+    	$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Widget Name', 'widget-name-locale' ) : $instance['title'], $instance, $this->id_base);
     
-		// Display the widget, allow take template from child or parent theme
-		if ( is_file(STYLESHEETPATH .'/widget-views/widget-name.php') ) { // Use custom template from child theme
-			include( STYLESHEETPATH .'/widget-views/widget-name.php' );
-		} elseif ( is_file(TEMPLATEPATH .'/widget-views/widget-name.php') ) { // Use custom template from parent theme
-			include( TEMPLATEPATH .'/widget-views/widget-name.php' );
-		} else { // Use builtin temlate
-			include( plugin_dir_path(__FILE__) . '/views/widget.php' );
-		}
+		include( plugin_dir_path(__FILE__) . '/views/widget.php' );
 		
 		echo $after_widget;
 		
@@ -107,10 +104,12 @@ class Widget_Name extends WP_Widget {
 	 * @old_instance	The new instance of values to be generated via the update.
 	 */
 	public function update( $new_instance, $old_instance ) {
+	
 		$instance = $old_instance;
 		
-    		// TODO Update the widget with the new values
-    		$instance['title'] = strip_tags($new_instance['title']);
+		// TODO Update the widget with the new values
+		// Note that this 'Title' is just an example
+		$instance['title'] = strip_tags( $new_instance['title'] );
     
 		return $instance;
 		
@@ -122,7 +121,8 @@ class Widget_Name extends WP_Widget {
 	 * @instance	The array of keys and values for the widget.
 	 */
 	public function form( $instance ) {
-    		// TODO define default values for your variables
+	
+    	// TODO define default values for your variables
 		$instance = wp_parse_args(
 			(array) $instance,
 			array(
@@ -130,10 +130,11 @@ class Widget_Name extends WP_Widget {
 			)
 		);
 	
-    		// TODO store the values of widget in a variable
+		// TODO store the values of widget in a variable
 		
 		// Display the admin form
-    		include( plugin_dir_path(__FILE__) . '/views/admin.php' );	
+		include( plugin_dir_path(__FILE__) . '/views/admin.php' );	
+		
 	} // end form
 
 	/*--------------------------------------------------*/
@@ -162,8 +163,10 @@ class Widget_Name extends WP_Widget {
 	 * Registers and enqueues admin-specific styles.
 	 */
 	public function register_admin_styles() {
+	
 		// TODO change 'widget-name' to the name of your plugin
-		wp_enqueue_style( 'widget-name-admin-styles', plugins_url( 'widget-name/css/admin.css' ) );
+		wp_register_style( 'widget-name-admin-styles', plugins_url( 'widget-name/css/admin.css' ) );
+		wp_enqueue_style( 'widget-name-admin-styles' );
 	
 	} // end register_admin_styles
 
@@ -171,30 +174,37 @@ class Widget_Name extends WP_Widget {
 	 * Registers and enqueues admin-specific JavaScript.
 	 */	
 	public function register_admin_scripts() {
+	
 		// TODO change 'widget-name' to the name of your plugin
 		wp_register_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
 		wp_enqueue_script( 'widget-name-admin-script' );
+		
 	} // end register_admin_scripts
 	
 	/**
 	 * Registers and enqueues widget-specific styles.
 	 */
 	public function register_widget_styles() {
+	
 		// TODO change 'widget-name' to the name of your plugin
 		wp_register_style( 'widget-name-widget-styles', plugins_url( 'widget-name/css/admin.css' ) );
 		wp_enqueue_style( 'widget-name-widget-styles' );
+		
 	} // end register_widget_styles
 	
 	/**
 	 * Registers and enqueues widget-specific scripts.
 	 */
 	public function register_widget_scripts() {
+	
 		// TODO change 'widget-name' to the name of your plugin
 		wp_register_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
 		wp_enqueue_script( 'widget-name-widget-script' );
+		
 	} // end register_widget_scripts
 	
 } // end class
+
 // TODO remember to change 'Widget_Name' to match the class name definition
 add_action( 'widgets_init', create_function( '', 'register_widget("Widget_Name");' ) ); 
 ?>
