@@ -47,8 +47,8 @@ class Widget_Name extends WP_Widget {
 		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
 		
 		// Manage plugin ativation/deactivation hooks
-		register_activation_hook( __FILE__, array( &$this, 'activate' ) );
-		register_deactivation_hook( __FILE__, array( &$this, 'deactivate' ) );
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 		
 		// TODO: update classname and description
 		// TODO: replace 'widget-name-locale' to be named more plugin specific. other instances exist throughout the code, too.
@@ -62,12 +62,12 @@ class Widget_Name extends WP_Widget {
 		);
 		
 		// Register admin styles and scripts
-		add_action( 'admin_print_styles', array( &$this, 'register_admin_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( &$this, 'register_admin_scripts' ) );
+		add_action( 'admin_print_styles', array( $this, 'register_admin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
 	
 		// Register site styles and scripts
-		add_action( 'wp_enqueue_scripts', array( &$this, 'register_widget_styles' ) );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'register_widget_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_scripts' ) );
 		
 	} // end constructor
 
@@ -91,7 +91,7 @@ class Widget_Name extends WP_Widget {
     	// Note that this 'Title' is just an example
     	$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Widget Name', 'widget-name-locale' ) : $instance['title'], $instance, $this->id_base);
     
-		include( plugin_dir_path(__FILE__) . '/views/widget.php' );
+		include( plugin_dir_path( __FILE__ ) . '/views/widget.php' );
 		
 		echo $after_widget;
 		
@@ -165,8 +165,7 @@ class Widget_Name extends WP_Widget {
 	public function register_admin_styles() {
 	
 		// TODO change 'widget-name' to the name of your plugin
-		wp_register_style( 'widget-name-admin-styles', plugins_url( 'widget-name/css/admin.css' ) );
-		wp_enqueue_style( 'widget-name-admin-styles' );
+		wp_enqueue_style( 'widget-name-admin-styles', plugins_url( 'widget-name/css/admin.css' ) );
 	
 	} // end register_admin_styles
 
@@ -176,8 +175,7 @@ class Widget_Name extends WP_Widget {
 	public function register_admin_scripts() {
 	
 		// TODO change 'widget-name' to the name of your plugin
-		wp_register_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
-		wp_enqueue_script( 'widget-name-admin-script' );
+		wp_enqueue_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
 		
 	} // end register_admin_scripts
 	
@@ -187,8 +185,7 @@ class Widget_Name extends WP_Widget {
 	public function register_widget_styles() {
 	
 		// TODO change 'widget-name' to the name of your plugin
-		wp_register_style( 'widget-name-widget-styles', plugins_url( 'widget-name/css/admin.css' ) );
-		wp_enqueue_style( 'widget-name-widget-styles' );
+		wp_enqueue_style( 'widget-name-widget-styles', plugins_url( 'widget-name/css/widget.css' ) );
 		
 	} // end register_widget_styles
 	
@@ -198,8 +195,7 @@ class Widget_Name extends WP_Widget {
 	public function register_widget_scripts() {
 	
 		// TODO change 'widget-name' to the name of your plugin
-		wp_register_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
-		wp_enqueue_script( 'widget-name-widget-script' );
+		wp_enqueue_script( 'widget-name-script', plugins_url( 'widget-name/js/widget.js' ) );
 		
 	} // end register_widget_scripts
 	
