@@ -203,4 +203,3 @@ class Widget_Name extends WP_Widget {
 
 // TODO remember to change 'Widget_Name' to match the class name definition
 add_action( 'widgets_init', create_function( '', 'register_widget("Widget_Name");' ) ); 
-?>
