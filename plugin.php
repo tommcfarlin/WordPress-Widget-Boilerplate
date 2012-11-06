@@ -42,9 +42,6 @@ class Widget_Name extends WP_Widget {
 	 * styles.
 	 */
 	public function __construct() {
-	
-		// TODO be sure to change 'widget-name' to the name of *your* plugin
-		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
 		
 		// Manage plugin ativation/deactivation hooks
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
@@ -60,6 +57,9 @@ class Widget_Name extends WP_Widget {
 				'description'	=>	__( 'Short description of the widget goes here.', 'widget-name-locale' )
 			)
 		);
+
+		// load plugin text domain
+		add_action( 'init', array( $this, 'textdomain' ) );
 		
 		// Register admin styles and scripts
 		add_action( 'admin_print_styles', array( $this, 'register_admin_styles' ) );
@@ -159,6 +159,14 @@ class Widget_Name extends WP_Widget {
 		// TODO define deactivation functionality here		
 	} // end deactivate
 	
+	/**
+	 * Load the plugin text domain on "init"
+	 */
+	public function textdomain() {
+		// TODO be sure to change 'widget-name' to the name of *your* plugin
+		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
+	}
+
 	/**
 	 * Registers and enqueues admin-specific styles.
 	 */
