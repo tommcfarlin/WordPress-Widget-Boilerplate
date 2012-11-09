@@ -7,4 +7,3 @@ if( isset( $title ) && ! empty( $title ) ) {
   echo $before_title . $title . $after_title;
   
 } // end if/else
-?>
