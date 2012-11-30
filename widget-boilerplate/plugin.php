@@ -29,7 +29,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// TODO: change 'Widget_Name' to the name of your actual plugin
+// TODO: change 'Widget_Name' to the name of your plugin
 class Widget_Name extends WP_Widget {
 
 	/*--------------------------------------------------*/
@@ -37,18 +37,20 @@ class Widget_Name extends WP_Widget {
 	/*--------------------------------------------------*/
 	
 	/**
-	 * The widget constructor. Specifies the classname and description, instantiates
-	 * the widget, loads localization files, and includes necessary scripts and
-	 * styles.
+	 * Specifies the classname and description, instantiates the widget, 
+	 * loads localization files, and includes necessary stylesheets and JavaScript.
 	 */
 	public function __construct() {
+	
+		// load plugin text domain
+		add_action( 'init', array( $this, 'widget_textdomain' ) );
 		
-		// Manage plugin ativation/deactivation hooks
+		// Hooks fired when the Widget is activated and deactivated
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 		
-		// TODO: update classname and description
-		// TODO: replace 'widget-name-locale' to be named more plugin specific. other instances exist throughout the code, too.
+		// TODO:	update classname and description
+		// TODO:	replace 'widget-name-locale' to be named more plugin specific. Other instances exist throughout the code, too.
 		parent::__construct(
 			'widget-name-id',
 			__( 'Widget Name', 'widget-name-locale' ),
@@ -57,9 +59,6 @@ class Widget_Name extends WP_Widget {
 				'description'	=>	__( 'Short description of the widget goes here.', 'widget-name-locale' )
 			)
 		);
-
-		// load plugin text domain
-		add_action( 'init', array( $this, 'textdomain' ) );
 		
 		// Register admin styles and scripts
 		add_action( 'admin_print_styles', array( $this, 'register_admin_styles' ) );
@@ -78,18 +77,16 @@ class Widget_Name extends WP_Widget {
 	/**
 	 * Outputs the content of the widget.
 	 *
-	 * @args			The array of form elements
-	 * @instance		The current instance of the widget
+	 * @param	array	args		The array of form elements
+	 * @param	array	instance	The current instance of the widget
 	 */
 	public function widget( $args, $instance ) {
 	
 		extract( $args, EXTR_SKIP );
 		
 		echo $before_widget;
-		
-    	// TODO: This is where you retrieve the widget values.
-    	// Note that this 'Title' is just an example
-    	$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Widget Name', 'widget-name-locale' ) : $instance['title'], $instance, $this->id_base);
+    
+		// TODO:	Here is where you manipulate your widget's values based on their input fields
     
 		include( plugin_dir_path( __FILE__ ) . '/views/widget.php' );
 		
@@ -100,16 +97,14 @@ class Widget_Name extends WP_Widget {
 	/**
 	 * Processes the widget's options to be saved.
 	 *
-	 * @new_instance	The previous instance of values before the update.
-	 * @old_instance	The new instance of values to be generated via the update.
+	 * @param	array	new_instance	The previous instance of values before the update.
+	 * @param	array	old_instance	The new instance of values to be generated via the update.
 	 */
 	public function update( $new_instance, $old_instance ) {
 	
 		$instance = $old_instance;
 		
-		// TODO Update the widget with the new values
-		// Note that this 'Title' is just an example
-		$instance['title'] = strip_tags( $new_instance['title'] );
+		// TODO:	Here is where you update your widget's old values with the new, incoming values
     
 		return $instance;
 		
@@ -118,19 +113,16 @@ class Widget_Name extends WP_Widget {
 	/**
 	 * Generates the administration form for the widget.
 	 *
-	 * @instance	The array of keys and values for the widget.
+	 * @param	array	instance	The array of keys and values for the widget.
 	 */
 	public function form( $instance ) {
 	
-    	// TODO define default values for your variables
+    	// TODO:	Define default values for your variables
 		$instance = wp_parse_args(
 			(array) $instance,
-			array(
-				'title'	=>	__( 'Widget Name', 'widget-name-locale' ),
-			)
 		);
 	
-		// TODO store the values of widget in a variable
+		// TODO:	Store the values of the widget in their own variable
 		
 		// Display the admin form
 		include( plugin_dir_path(__FILE__) . '/views/admin.php' );	
@@ -142,9 +134,19 @@ class Widget_Name extends WP_Widget {
 	/*--------------------------------------------------*/
 	
 	/**
+	 * Loads the Widget's text domain for localization and translation.
+	 */
+	public function widget_textdomain() {
+	
+		// TODO be sure to change 'widget-name' to the name of *your* plugin
+		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
+		
+	} // end widget_textdomain
+	
+	/**
 	 * Fired when the plugin is activated.
 	 *
-	 * @params	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog 
+	 * @param		boolean	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
 	 */
 	public function activate( $network_wide ) {
 		// TODO define activation functionality here
@@ -153,26 +155,18 @@ class Widget_Name extends WP_Widget {
 	/**
 	 * Fired when the plugin is deactivated.
 	 *
-	 * @params	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog 
+	 * @param	boolean	$network_wide	True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog 
 	 */
 	public function deactivate( $network_wide ) {
 		// TODO define deactivation functionality here		
 	} // end deactivate
 	
 	/**
-	 * Load the plugin text domain on "init"
-	 */
-	public function textdomain() {
-		// TODO be sure to change 'widget-name' to the name of *your* plugin
-		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
-	}
-
-	/**
 	 * Registers and enqueues admin-specific styles.
 	 */
 	public function register_admin_styles() {
 	
-		// TODO change 'widget-name' to the name of your plugin
+		// TODO:	Change 'widget-name' to the name of your plugin
 		wp_enqueue_style( 'widget-name-admin-styles', plugins_url( 'widget-name/css/admin.css' ) );
 	
 	} // end register_admin_styles
@@ -182,7 +176,7 @@ class Widget_Name extends WP_Widget {
 	 */	
 	public function register_admin_scripts() {
 	
-		// TODO change 'widget-name' to the name of your plugin
+		// TODO:	Change 'widget-name' to the name of your plugin
 		wp_enqueue_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ) );
 		
 	} // end register_admin_scripts
@@ -192,7 +186,7 @@ class Widget_Name extends WP_Widget {
 	 */
 	public function register_widget_styles() {
 	
-		// TODO change 'widget-name' to the name of your plugin
+		// TODO:	Change 'widget-name' to the name of your plugin
 		wp_enqueue_style( 'widget-name-widget-styles', plugins_url( 'widget-name/css/widget.css' ) );
 		
 	} // end register_widget_styles
@@ -202,12 +196,12 @@ class Widget_Name extends WP_Widget {
 	 */
 	public function register_widget_scripts() {
 	
-		// TODO change 'widget-name' to the name of your plugin
+		// TODO:	Change 'widget-name' to the name of your plugin
 		wp_enqueue_script( 'widget-name-script', plugins_url( 'widget-name/js/widget.js' ) );
 		
 	} // end register_widget_scripts
 	
 } // end class
 
-// TODO remember to change 'Widget_Name' to match the class name definition
+// TODO:	Remember to change 'Widget_Name' to match the class name definition
 add_action( 'widgets_init', create_function( '', 'register_widget("Widget_Name");' ) ); 

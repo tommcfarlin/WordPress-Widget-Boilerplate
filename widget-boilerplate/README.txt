@@ -28,7 +28,7 @@ higher versions... this is just the highest one you've verified.
 *   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
 stable.
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
+Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
 if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
 for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
 is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
