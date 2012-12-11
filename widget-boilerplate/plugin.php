@@ -119,7 +119,7 @@ class Widget_Name extends WP_Widget {
 	
     	// TODO:	Define default values for your variables
 		$instance = wp_parse_args(
-			(array) $instance,
+			(array) $instance
 		);
 	
 		// TODO:	Store the values of the widget in their own variable
