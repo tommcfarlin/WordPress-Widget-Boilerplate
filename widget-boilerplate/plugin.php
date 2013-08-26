@@ -13,7 +13,7 @@ Network: false
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Copyright 2012 TODO (email@domain.com)
+Copyright 2013 TODO (email@domain.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as
