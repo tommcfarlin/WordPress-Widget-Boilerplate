@@ -97,8 +97,8 @@ class Widget_Name extends WP_Widget {
 	/**
 	 * Processes the widget's options to be saved.
 	 *
-	 * @param	array	new_instance	The previous instance of values before the update.
-	 * @param	array	old_instance	The new instance of values to be generated via the update.
+	 * @param	array	new_instance	The new instance of values to be generated via the update.
+	 * @param	array	old_instance	The previous instance of values before the update.
 	 */
 	public function update( $new_instance, $old_instance ) {
 
