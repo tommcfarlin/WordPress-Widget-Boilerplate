@@ -88,7 +88,7 @@ class Widget_Name extends WP_Widget {
 
 		// TODO:	Here is where you manipulate your widget's values based on their input fields
 
-		include( plugin_dir_path( __FILE__ ) . '/views/widget.php' );
+		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
 
 		echo $after_widget;
 
@@ -125,7 +125,7 @@ class Widget_Name extends WP_Widget {
 		// TODO:	Store the values of the widget in their own variable
 
 		// Display the admin form
-		include( plugin_dir_path(__FILE__) . '/views/admin.php' );
+		include( plugin_dir_path(__FILE__) . 'views/admin.php' );
 
 	} // end form
 
@@ -139,7 +139,7 @@ class Widget_Name extends WP_Widget {
 	public function widget_textdomain() {
 
 		// TODO be sure to change 'widget-name' to the name of *your* plugin
-		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . '/lang/' );
+		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . 'lang/' );
 
 	} // end widget_textdomain
 
