@@ -1,36 +1,47 @@
 <?php
-/*
-Plugin Name: TODO
-Plugin URI: TODO
-Description: TODO
-Version: 1.0
-Author: TODO
-Author URI: TODO
-Author Email: TODO
-Text Domain: widget-name-locale
-Domain Path: /lang/
-Network: false
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
-Copyright 2013 TODO (email@domain.com)
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as
-published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+/**
+ * WordPress Widget Boilerplate
+ *
+ * The WordPress Widget Boilerplate is an organized, maintainable boilerplate for building widgets using WordPress best practices.
+ *
+ * @package   Widget_Name
+ * @author    Your Name <email@example.com>
+ * @license   GPL-2.0+
+ * @link      http://example.com
+ * @copyright 2014 Your Name or Company Name
+ *
+ * @wordpress-plugin
+ * Plugin Name:       @TODO
+ * Plugin URI:        @TODO
+ * Description:       @TODO
+ * Version:           1.0.0
+ * Author:            @TODO
+ * Author URI:        @TODO
+ * Text Domain:       widget-name
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Domain Path:       /languages
+ * GitHub Plugin URI: https://github.com/<owner>/<repo>
+ */
 
 // TODO: change 'Widget_Name' to the name of your plugin
 class Widget_Name extends WP_Widget {
+
+    /**
+     * @TODO - Rename "widget-name" to the name your your widget
+     *
+     * Unique identifier for your widget.
+     *
+     *
+     * The variable name is used as the text domain when internationalizing strings
+     * of text. Its value should match the Text Domain file header in the main
+     * widget file.
+     *
+     * @since    1.0.0
+     *
+     * @var      string
+     */
+    protected $widget_slug = 'widget-name';
 
 	/*--------------------------------------------------*/
 	/* Constructor
@@ -49,14 +60,13 @@ class Widget_Name extends WP_Widget {
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 
-		// TODO: update widget-name-id, classname and description
-		// TODO: replace 'widget-name-locale' to be named more plugin specific. Other instances exist throughout the code, too.
+		// TODO: update description
 		parent::__construct(
-			'widget-name-id', // <-- Change this
-			__( 'Widget Name', 'widget-name-locale' ),
+			$this->get_widget_slug(),
+			__( 'Widget Name', $this->get_widget_slug() ),
 			array(
-				'classname'  => 'widget-name-class',
-				'description' => __( 'Short description of the widget goes here.', 'widget-name-locale' )
+				'classname'  => $this->get_widget_slug().'-class',
+				'description' => __( 'Short description of the widget goes here.', $this->get_widget_slug() )
 			)
 		);
 
@@ -75,6 +85,18 @@ class Widget_Name extends WP_Widget {
 
 	} // end constructor
 
+
+    /**
+     * Return the widget slug.
+     *
+     * @since    1.0.0
+     *
+     * @return    Plugin slug variable.
+     */
+    public function get_widget_slug() {
+        return $this->widget_slug;
+    }
+
 	/*--------------------------------------------------*/
 	/* Widget API Functions
 	/*--------------------------------------------------*/
@@ -89,7 +111,7 @@ class Widget_Name extends WP_Widget {
 
 		
 		// Check if there is a cached output
-		$cache = wp_cache_get( 'widget-name-id', 'widget' );
+		$cache = wp_cache_get( $this->get_widget_slug(), 'widget' );
 
 		if ( !is_array( $cache ) )
 			$cache = array();
@@ -116,7 +138,7 @@ class Widget_Name extends WP_Widget {
 
 		$cache[ $args['widget_id'] ] = $widget_string;
 
-		wp_cache_set( 'widget-name-id', $cache, 'widget' );
+		wp_cache_set( $this->get_widget_slug(), $cache, 'widget' );
 
 		print $widget_string;
 
@@ -125,7 +147,7 @@ class Widget_Name extends WP_Widget {
 	
 	public function flush_widget_cache() 
 	{
-    	wp_cache_delete( 'widget-name-id', 'widget' );
+    	wp_cache_delete( $this->get_widget_slug(), 'widget' );
 	}
 	/**
 	 * Processes the widget's options to be saved.
@@ -172,7 +194,7 @@ class Widget_Name extends WP_Widget {
 	public function widget_textdomain() {
 
 		// TODO be sure to change 'widget-name' to the name of *your* plugin
-		load_plugin_textdomain( 'widget-name-locale', false, plugin_dir_path( __FILE__ ) . 'lang/' );
+		load_plugin_textdomain( $this->get_widget_slug(), false, plugin_dir_path( __FILE__ ) . 'lang/' );
 
 	} // end widget_textdomain
 
@@ -199,8 +221,7 @@ class Widget_Name extends WP_Widget {
 	 */
 	public function register_admin_styles() {
 
-		// TODO: Change 'widget-name' to the name of your plugin
-		wp_enqueue_style( 'widget-name-admin-styles', plugins_url( 'widget-name/css/admin.css' ) );
+		wp_enqueue_style( $this->get_widget_slug().'-admin-styles', plugins_url( 'css/admin.css', __FILE__ ) );
 
 	} // end register_admin_styles
 
@@ -209,8 +230,7 @@ class Widget_Name extends WP_Widget {
 	 */
 	public function register_admin_scripts() {
 
-		// TODO: Change 'widget-name' to the name of your plugin
-		wp_enqueue_script( 'widget-name-admin-script', plugins_url( 'widget-name/js/admin.js' ), array('jquery') );
+		wp_enqueue_script( $this->get_widget_slug().'-admin-script', plugins_url( 'js/admin.js', __FILE__ ), array('jquery') );
 
 	} // end register_admin_scripts
 
@@ -219,8 +239,7 @@ class Widget_Name extends WP_Widget {
 	 */
 	public function register_widget_styles() {
 
-		// TODO: Change 'widget-name' to the name of your plugin
-		wp_enqueue_style( 'widget-name-widget-styles', plugins_url( 'widget-name/css/widget.css' ) );
+		wp_enqueue_style( $this->get_widget_slug().'-widget-styles', plugins_url( 'css/widget.css', __FILE__ ) );
 
 	} // end register_widget_styles
 
@@ -229,8 +248,7 @@ class Widget_Name extends WP_Widget {
 	 */
 	public function register_widget_scripts() {
 
-		// TODO: Change 'widget-name' to the name of your plugin
-		wp_enqueue_script( 'widget-name-script', plugins_url( 'widget-name/js/widget.js' ), array('jquery') );
+		wp_enqueue_script( $this->get_widget_slug().'-script', plugins_url( 'js/widget.js', __FILE__ ), array('jquery') );
 
 	} // end register_widget_scripts
 
