@@ -23,6 +23,11 @@
  * Domain Path:       /lang
  * GitHub Plugin URI: https://github.com/<owner>/<repo>
  */
+ 
+ // Prevent direct file access
+if ( ! defined ( 'ABSPATH' ) ) {
+	exit;
+}
 
 // TODO: change 'Widget_Name' to the name of your plugin
 class Widget_Name extends WP_Widget {
