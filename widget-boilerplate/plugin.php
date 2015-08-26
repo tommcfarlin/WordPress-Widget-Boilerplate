@@ -168,7 +168,7 @@ class Widget_Name extends WP_Widget {
 
 		return $instance;
 
-	} // end widget
+	} // end update
 
 	/**
 	 * Generates the administration form for the widget.
