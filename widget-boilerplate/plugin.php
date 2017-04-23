@@ -59,11 +59,7 @@ class Widget_Name extends WP_Widget {
 	public function __construct() {
 
 		// load plugin text domain
-		add_action( 'init', array( $this, 'widget_textdomain' ) );
-
-		// Hooks fired when the Widget is activated and deactivated
-		register_activation_hook( __FILE__, array( $this, 'activate' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+		add_action( 'init', array( $this, 'widget_textdomain' ) );		
 
 		// TODO: update description
 		parent::__construct(
@@ -208,7 +204,7 @@ class Widget_Name extends WP_Widget {
 	 *
 	 * @param  boolean $network_wide True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
 	 */
-	public function activate( $network_wide ) {
+	public static function activate( $network_wide ) {
 		// TODO define activation functionality here
 	} // end activate
 
@@ -217,7 +213,7 @@ class Widget_Name extends WP_Widget {
 	 *
 	 * @param boolean $network_wide True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
 	 */
-	public function deactivate( $network_wide ) {
+	public static function deactivate( $network_wide ) {
 		// TODO define deactivation functionality here
 	} // end deactivate
 
@@ -261,3 +257,8 @@ class Widget_Name extends WP_Widget {
 
 // TODO: Remember to change 'Widget_Name' to match the class name definition
 add_action( 'widgets_init', create_function( '', 'register_widget("Widget_Name");' ) );
+
+// Hooks fired when the Widget is activated and deactivated
+// TODO: Remember to change 'Widget_Name' to match the class name definition
+register_activation_hook( __FILE__, array( 'Widget_Name', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'Widget_Name', 'deactivate' ) );
