@@ -23,7 +23,7 @@
  * Domain Path:       /lang
  * GitHub Plugin URI: https://github.com/<owner>/<repo>
  */
- 
+
  // Prevent direct file access
 if ( ! defined ( 'ABSPATH' ) ) {
 	exit;
@@ -110,7 +110,7 @@ class Widget_Name extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 
-		
+
 		// Check if there is a cached output
 		$cache = wp_cache_get( $this->get_widget_slug(), 'widget' );
 
@@ -118,11 +118,11 @@ class Widget_Name extends WP_Widget {
 			$cache = array();
 
 		if ( ! isset ( $args['widget_id'] ) )
-			$args['widget_id'] = $this->id;
+			$args['widget_id'] = $this->get_widget_slug();
 
 		if ( isset ( $cache[ $args['widget_id'] ] ) )
 			return print $cache[ $args['widget_id'] ];
-		
+
 		// go on with your widget logic, put everything into a string and …
 
 
@@ -144,9 +144,9 @@ class Widget_Name extends WP_Widget {
 		print $widget_string;
 
 	} // end widget
-	
-	
-	public function flush_widget_cache() 
+
+
+	public function flush_widget_cache()
 	{
     	wp_cache_delete( $this->get_widget_slug(), 'widget' );
 	}
