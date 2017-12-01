@@ -195,7 +195,7 @@ class Widget_Name extends WP_Widget {
 	public function widget_textdomain() {
 
 		// TODO be sure to change 'widget-name' to the name of *your* plugin
-		load_plugin_textdomain( $this->get_widget_slug(), false, plugin_dir_path( __FILE__ ) . 'lang/' );
+		load_plugin_textdomain( $this->get_widget_slug(), false, dirname( plugin_basename( __FILE__ ) ) . 'lang/' );
 
 	} // end widget_textdomain
 
