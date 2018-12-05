@@ -4,8 +4,6 @@
 
     <!-- Scan all files in directory -->
     <file>./src</file>
-    <file>./tests</file>
-    <exclude-pattern>./tests/phpunit/*</exclude-pattern>
     <!-- Scan only PHP files -->
     <arg name="extensions" value="php"/>
 
@@ -25,4 +23,5 @@
             <property name="indent" value="4"/>
             <property name="tabIndent" value="false"/>
         </properties>
-    </rule>
+    </rule>>
+</ruleset>
