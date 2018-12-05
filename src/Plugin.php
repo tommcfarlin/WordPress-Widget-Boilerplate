@@ -1,264 +1,225 @@
 <?php
-/**
- * WordPress Widget Boilerplate
+
+/*
+ * This file is part of WordPress Widget Boilerplate
+ * (c) Tom McFarlin <tom@tommcfarlin.com>
  *
- * The WordPress Widget Boilerplate is an organized, maintainable boilerplate for building widgets using WordPress best practices.
- *
- * @package   Widget_Name
- * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
- * @link      http://example.com
- * @copyright 2014 Your Name or Company Name
- *
- * @wordpress-plugin
- * Plugin Name:       @TODO
- * Plugin URI:        @TODO
- * Description:       @TODO
- * Version:           1.0.0
- * Author:            @TODO
- * Author URI:        @TODO
- * Text Domain:       widget-name
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Domain Path:       /lang
- * GitHub Plugin URI: https://github.com/<owner>/<repo>
+ * This source file is subject to the GPL license that is bundled
+ * with this source code in the file LICENSE.
  */
- 
- // Prevent direct file access
-if ( ! defined ( 'ABSPATH' ) ) {
-	exit;
-}
 
-// TODO: change 'Widget_Name' to the name of your plugin
-class Widget_Name extends WP_Widget {
+namespace WordPressWidgetBoilerplace;
 
+class Plugin extends WP_Widget
+{
     /**
-     * @TODO - Rename "widget-name" to the name your your widget
+     * TODO: Rename "widget-name" to the name your your widget.
      *
      * Unique identifier for your widget.
      *
-     *
-     * The variable name is used as the text domain when internationalizing strings
-     * of text. Its value should match the Text Domain file header in the main
-     * widget file.
-     *
      * @since    1.0.0
      *
-     * @var      string
+     * @var string
      */
-    protected $widget_slug = 'widget-name';
+    protected $widgetSlug = 'widget-name';
 
-	/*--------------------------------------------------*/
-	/* Constructor
-	/*--------------------------------------------------*/
+    /**
+     * Specifies the classname and description, instantiates the widget,
+     * loads localization files, and includes necessary stylesheets and JavaScript.
+     */
+    public function __construct()
+    {
+        // load plugin text domain
+        add_action('init', [$this, 'widgetTextdomain']);
 
-	/**
-	 * Specifies the classname and description, instantiates the widget,
-	 * loads localization files, and includes necessary stylesheets and JavaScript.
-	 */
-	public function __construct() {
+        // TODO: update description
+        parent::__construct(
+            $this->getWidgetSlug(),
+            __('Widget Name', $this->getWidgetSlug()),
+            [
+                'classname' => $this->getWidgetSlug().'-class',
+                'description' => __('Short description of the widget goes here.', $this->getWidgetSlug()),
+            ]
+        );
 
-		// load plugin text domain
-		add_action( 'init', array( $this, 'widget_textdomain' ) );		
+        // Register admin styles and scripts
+        add_action('admin_print_styles', [$this, 'registerAdminStyles']);
+        add_action('admin_enqueue_scripts', [$this, 'registerAdminScripts']);
 
-		// TODO: update description
-		parent::__construct(
-			$this->get_widget_slug(),
-			__( 'Widget Name', $this->get_widget_slug() ),
-			array(
-				'classname'  => $this->get_widget_slug().'-class',
-				'description' => __( 'Short description of the widget goes here.', $this->get_widget_slug() )
-			)
-		);
+        // Register site styles and scripts
+        add_action('wp_enqueue_scripts', [$this, 'registerWidgetStyles']);
+        add_action('wp_enqueue_scripts', [$this, 'registerWidgetScripts']);
 
-		// Register admin styles and scripts
-		add_action( 'admin_print_styles', array( $this, 'register_admin_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
-
-		// Register site styles and scripts
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_styles' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_widget_scripts' ) );
-
-		// Refreshing the widget's cached output with each new post
-		add_action( 'save_post',    array( $this, 'flush_widget_cache' ) );
-		add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
-		add_action( 'switch_theme', array( $this, 'flush_widget_cache' ) );
-
-	} // end constructor
-
+        // Refreshing the widget's cached output with each new post
+        add_action('save_post', [$this, 'flushWidgetCache']);
+        add_action('deleted_post', [$this, 'flushWidgetCache']);
+        add_action('switch_theme', [$this, 'flushWidgetCache']);
+    }
 
     /**
      * Return the widget slug.
      *
      * @since    1.0.0
      *
-     * @return    Plugin slug variable.
+     * @return Plugin slug variable
      */
-    public function get_widget_slug() {
-        return $this->widget_slug;
+    public function getWidgetSlug()
+    {
+        return $this->widgetSlug;
     }
 
-	/*--------------------------------------------------*/
-	/* Widget API Functions
-	/*--------------------------------------------------*/
+    /**
+     * Outputs the content of the widget.
+     *
+     * @param array args  The array of form elements
+     * @param array instance The current instance of the widget
+     * @param mixed $args
+     * @param mixed $instance
+     */
+    public function widget($args, $instance)
+    {
+        // Check if there is a cached output
+        $cache = wp_cache_get($this->getWidgetSlug(), 'widget');
 
-	/**
-	 * Outputs the content of the widget.
-	 *
-	 * @param array args  The array of form elements
-	 * @param array instance The current instance of the widget
-	 */
-	public function widget( $args, $instance ) {
+        if (!\is_array($cache)) {
+            $cache = [];
+        }
 
-		
-		// Check if there is a cached output
-		$cache = wp_cache_get( $this->get_widget_slug(), 'widget' );
+        if (!isset($args['widget_id'])) {
+            $args['widget_id'] = $this->id;
+        }
 
-		if ( !is_array( $cache ) )
-			$cache = array();
+        if (isset($cache[$args['widget_id']])) {
+            return print $cache[$args['widget_id']];
+        }
+        // go on with your widget logic, put everything into a string and …
 
-		if ( ! isset ( $args['widget_id'] ) )
-			$args['widget_id'] = $this->id;
+        extract($args, EXTR_SKIP);
 
-		if ( isset ( $cache[ $args['widget_id'] ] ) )
-			return print $cache[ $args['widget_id'] ];
-		
-		// go on with your widget logic, put everything into a string and …
+        $widgetString = $beforeWidget;
 
+        // TODO: Here is where you manipulate your widget's values based on their input fields
+        ob_start();
+        include plugin_dir_path(__FILE__).'views/widget.php';
+        $widgetString .= ob_get_clean();
+        $widgetString .= $afterWidget;
 
-		extract( $args, EXTR_SKIP );
+        $cache[$args['widget_id']] = $widgetString;
 
-		$widget_string = $before_widget;
+        wp_cache_set($this->getWidgetSlug(), $cache, 'widget');
 
-		// TODO: Here is where you manipulate your widget's values based on their input fields
-		ob_start();
-		include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
-		$widget_string .= ob_get_clean();
-		$widget_string .= $after_widget;
+        echo $widgetString;
+    }
 
+    public function flushWidgetCache()
+    {
+        wp_cache_delete($this->getWidgetSlug(), 'widget');
+    }
 
-		$cache[ $args['widget_id'] ] = $widget_string;
+    /**
+     * Processes the widget's options to be saved.
+     *
+     * @param array $newInstance The new instance of values to be generated via the update
+     * @param array $oldInstance The previous instance of values before the update
+     * @param mixed $newInstance
+     * @param mixed $oldInstance
+     */
+    public function update($newInstance, $oldInstance)
+    {
+        $instance = $oldInstance;
 
-		wp_cache_set( $this->get_widget_slug(), $cache, 'widget' );
+        // TODO: Here is where you update your widget's old values with the new, incoming values
 
-		print $widget_string;
+        return $instance;
+    }
 
-	} // end widget
-	
-	
-	public function flush_widget_cache() 
-	{
-    	wp_cache_delete( $this->get_widget_slug(), 'widget' );
-	}
-	/**
-	 * Processes the widget's options to be saved.
-	 *
-	 * @param array new_instance The new instance of values to be generated via the update.
-	 * @param array old_instance The previous instance of values before the update.
-	 */
-	public function update( $new_instance, $old_instance ) {
+    /**
+     * Generates the administration form for the widget.
+     *
+     * @param array instance The array of keys and values for the widget
+     * @param mixed $instance
+     */
+    public function form($instance)
+    {
+        // TODO: Define default values for your variables
+        $instance = wp_parse_args(
+            (array) $instance
+        );
 
-		$instance = $old_instance;
+        // TODO: Store the values of the widget in their own variable
 
-		// TODO: Here is where you update your widget's old values with the new, incoming values
+        // Display the admin form
+        include plugin_dir_path(__FILE__).'views/admin.php';
+    }
 
-		return $instance;
+    /**
+     * Loads the Widget's text domain for localization and translation.
+     */
+    public function widgetTextdomain()
+    {
+        // TODO: be sure to change 'widget-name' to the name of *your* plugin
+        load_plugin_textdomain($this->getWidgetSlug(), false, \dirname(plugin_basename(__FILE__)).'lang/');
+    }
 
-	} // end update
+    /**
+     * Fired when the plugin is activated.
+     *
+     * @param bool $networkWide true if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
+     */
+    public static function activate($networkWide)
+    {
+        // TODO: define activation functionality here
+    }
 
-	/**
-	 * Generates the administration form for the widget.
-	 *
-	 * @param array instance The array of keys and values for the widget.
-	 */
-	public function form( $instance ) {
+    /**
+     * Fired when the plugin is deactivated.
+     *
+     * @param bool $networkWide True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
+     */
+    public static function deactivate($networkWide)
+    {
+        // TODO:define deactivation functionality here
+    }
 
-		// TODO: Define default values for your variables
-		$instance = wp_parse_args(
-			(array) $instance
-		);
+    /**
+     * Registers and enqueues admin-specific styles.
+     */
+    public function registerAdminStyles()
+    {
+        wp_enqueue_style($this->getWidgetSlug().'-admin-styles', plugins_url('css/admin.css', __FILE__));
+    }
 
-		// TODO: Store the values of the widget in their own variable
+    /**
+     * Registers and enqueues admin-specific JavaScript.
+     */
+    public function registerAdminScripts()
+    {
+        wp_enqueue_script($this->getWidgetSlug().'-admin-script', plugins_url('js/admin.js', __FILE__), ['jquery']);
+    }
 
-		// Display the admin form
-		include( plugin_dir_path(__FILE__) . 'views/admin.php' );
+    /**
+     * Registers and enqueues widget-specific styles.
+     */
+    public function registerWidgetStyles()
+    {
+        wp_enqueue_style($this->getWidgetSlug().'-widget-styles', plugins_url('css/widget.css', __FILE__));
+    }
 
-	} // end form
+    /**
+     * Registers and enqueues widget-specific scripts.
+     */
+    public function registerWidgetScripts()
+    {
+        wp_enqueue_script($this->getWidgetSlug().'-script', plugins_url('js/widget.js', __FILE__), ['jquery']);
+    }
+}
 
-	/*--------------------------------------------------*/
-	/* Public Functions
-	/*--------------------------------------------------*/
-
-	/**
-	 * Loads the Widget's text domain for localization and translation.
-	 */
-	public function widget_textdomain() {
-
-		// TODO be sure to change 'widget-name' to the name of *your* plugin
-		load_plugin_textdomain( $this->get_widget_slug(), false, dirname( plugin_basename( __FILE__ ) ) . 'lang/' );
-
-	} // end widget_textdomain
-
-	/**
-	 * Fired when the plugin is activated.
-	 *
-	 * @param  boolean $network_wide True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
-	 */
-	public static function activate( $network_wide ) {
-		// TODO define activation functionality here
-	} // end activate
-
-	/**
-	 * Fired when the plugin is deactivated.
-	 *
-	 * @param boolean $network_wide True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog
-	 */
-	public static function deactivate( $network_wide ) {
-		// TODO define deactivation functionality here
-	} // end deactivate
-
-	/**
-	 * Registers and enqueues admin-specific styles.
-	 */
-	public function register_admin_styles() {
-
-		wp_enqueue_style( $this->get_widget_slug().'-admin-styles', plugins_url( 'css/admin.css', __FILE__ ) );
-
-	} // end register_admin_styles
-
-	/**
-	 * Registers and enqueues admin-specific JavaScript.
-	 */
-	public function register_admin_scripts() {
-
-		wp_enqueue_script( $this->get_widget_slug().'-admin-script', plugins_url( 'js/admin.js', __FILE__ ), array('jquery') );
-
-	} // end register_admin_scripts
-
-	/**
-	 * Registers and enqueues widget-specific styles.
-	 */
-	public function register_widget_styles() {
-
-		wp_enqueue_style( $this->get_widget_slug().'-widget-styles', plugins_url( 'css/widget.css', __FILE__ ) );
-
-	} // end register_widget_styles
-
-	/**
-	 * Registers and enqueues widget-specific scripts.
-	 */
-	public function register_widget_scripts() {
-
-		wp_enqueue_script( $this->get_widget_slug().'-script', plugins_url( 'js/widget.js', __FILE__ ), array('jquery') );
-
-	} // end register_widget_scripts
-
-} // end class
-
+/*
 // TODO: Remember to change 'Widget_Name' to match the class name definition
-add_action( 'widgets_init', create_function( '', 'register_widget("Widget_Name");' ) );
+add_action('widgets_init', create_function('', 'register_widget("Widget_Name");'));
 
 // Hooks fired when the Widget is activated and deactivated
 // TODO: Remember to change 'Widget_Name' to match the class name definition
-register_activation_hook( __FILE__, array( 'Widget_Name', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'Widget_Name', 'deactivate' ) );
+register_activation_hook(__FILE__, ['Widget_Name', 'activate']);
+register_deactivation_hook(__FILE__, ['Widget_Name', 'deactivate']);
+*/
