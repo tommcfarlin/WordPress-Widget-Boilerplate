@@ -43,5 +43,13 @@
         "./vendor/bin/grumphp run"
       ]
     },
+    "autoload": {
+        "psr-4": {
+            "WordPressWidgetBoilerplate\\": "src/",
+            "WordPressWidgetBoilerplate\\Subscriber\\": "src/Subscriber",
+            "WordPressWidgetBoilerplate\\Utilities\\": "src/Utilities",
+            "WordPressWidgetBoilerplate\\Views\\": "src/Views"
+        }
+    },
     "minimum-stability": "stable"
   }
