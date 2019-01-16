@@ -27,13 +27,13 @@
 
 namespace WordPressWidgetBoilerplate;
 
-use WordPressWidgetBoilerplate\Utilities;
+use WordPressWidgetBoilerplate\Utilities\Registry;
 
 // Prevent this file from being called directly.
 defined('WPINC') || die;
 
 // Include the autoloader.
-require_once __DIR__ . '/inc/autoload.php';
+require_once 'vendor/autoload.php';
 
 // Setup a filter so we can retrieve the registry throughout the plugin.
 $registry = new Registry();
