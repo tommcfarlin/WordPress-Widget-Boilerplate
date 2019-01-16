@@ -7,9 +7,9 @@
  *
  * @package   Widget_Name
  * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
+ * @license   GPL-3.0+
  * @link      http://example.com
- * @copyright 2018 Your Name or Company Name
+ * @copyright 2018 - 2019 Your Name or Company Name
  *
  * @wordpress-plugin
  * Plugin Name:       @TODO
@@ -25,8 +25,18 @@
  * GitHub Plugin URI: https://github.com/<owner>/<repo>
  */
 
+namespace WordPressWidgetBoilerplate;
+
+use WordPressWidgetBoilerplate\Utilities;
+
 // Prevent this file from being called directly.
 defined('WPINC') || die;
 
 // Include the autoloader.
 require_once __DIR__ . '/inc/autoload.php';
+
+// Setup a filter so we can retrieve the registry throughout the plugin.
+$registry = new Registry();
+add_filter('wpWidgetRegistry', function () use ($registry) {
+    return $registry;
+});
