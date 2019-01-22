@@ -37,12 +37,6 @@ class Widget extends WP_Widget
                 'description' => __('Short description of the widget goes here.', $this->getWidgetSlug()),
             ]
         );
-
-        // TODO: This is a temporary message to show that the Boilerplate has loaded.
-        $html = '<p style="text-align:center; background: #fff; padding: 1em; border: 1px dotted gray; margin: 2em 2em 2em 14em;">';
-        $html .= 'The Widget Boilerplate is loaded.';
-        $html .= '</p>';
-        echo $html;
     }
 
     /**
@@ -53,5 +47,16 @@ class Widget extends WP_Widget
     public function getWidgetSlug()
     {
         return $this->widgetSlug;
+    }
+
+    /**
+     * TODO: This is a temporary message to show that the Boilerplate has loaded.
+     */
+    public function load()
+    {
+        $html = '<p style="text-align:center; background: #fff; padding: 1em; border: 1px dotted gray; margin: 2em 2em 2em 14em;">';
+        $html .= 'The Widget Boilerplate is loaded.';
+        $html .= '</p>';
+        echo $html;
     }
 }

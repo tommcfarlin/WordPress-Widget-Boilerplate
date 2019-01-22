@@ -40,5 +40,11 @@ class Plugin
         array_map(function ($subscriber) {
             add_action($subscriber->getHook(), [$subscriber, 'load']);
         }, $this->registry->getRegisteredSubscribers());
+
+        if (is_admin()) {
+            array_map(function ($object) {
+                $object->load();
+            }, $this->registry->getRegisteredObjects());
+        }
     }
 }

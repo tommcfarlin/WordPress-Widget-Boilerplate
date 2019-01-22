@@ -82,4 +82,19 @@ class Registry
 
         return array_filter($subscribers);
     }
+
+    /**
+     * @return array all of the the objects that aren't subscribers registered with WordPress
+     */
+    public function getRegisteredObjects()
+    {
+        $objects = [];
+        foreach ($this->registry as $object) {
+            if (!$object instanceof AbstractSubscriber) {
+                $objects[] = $object;
+            }
+        }
+
+        return array_filter($objects);
+    }
 }
