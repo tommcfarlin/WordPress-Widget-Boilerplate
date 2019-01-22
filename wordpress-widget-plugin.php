@@ -5,28 +5,45 @@
  * The WordPress Widget Boilerplate is an organized, maintainable boilerplate for building
  * widgets using WordPress best practices.
  *
- * @package   Widget_Name
+ * @package   WordPressWidgetBoilerplate
  * @author    Your Name <email@example.com>
- * @license   GPL-2.0+
+ * @license   GPL-3.0+
  * @link      http://example.com
- * @copyright 2018 Your Name or Company Name
+ * @copyright 2018 - 2019 Your Name or Company Name
  *
  * @wordpress-plugin
- * Plugin Name:       @TODO
- * Plugin URI:        @TODO
- * Description:       @TODO
+ * Plugin Name:       WordPress Widget Boilerplate
+ * Plugin URI:        https://github.com/tommcfarlin/wordpress-widget-boilerplate
+ * Description:       An object-oriented foundation for building WordPress Widgets.
  * Version:           1.0.0
- * Author:            @TODO
- * Author URI:        @TODO
+ * Author:            Tom McFarlin
+ * Author URI:        https://tommcfarlin.com
  * Text Domain:       widget-name
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Domain Path:       /lang
- * GitHub Plugin URI: https://github.com/<owner>/<repo>
  */
+
+namespace WordPressWidgetBoilerplate;
+
+use WordPressWidgetBoilerplate\Utilities\Registry;
+use WordPressWidgetBoilerplate\Plugin;
+use WordPressWidgetBoilerplate\API\Widget;
 
 // Prevent this file from being called directly.
 defined('WPINC') || die;
 
 // Include the autoloader.
-require_once __DIR__ . '/inc/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Setup a filter so we can retrieve the registry throughout the plugin.
+$registry = new Registry();
+add_filter('wpwBoilerplateRegistry', function () use ($registry) {
+    return $registry;
+});
+
+// Add the Widget base class to the Registry.
+$registry->add('widget', new Widget('widget-name'));
+
+// Start the machine.
+(new Plugin($registry))->start();
