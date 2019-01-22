@@ -38,6 +38,12 @@
         "ocramius/proxy-manager": "^2.0.0",
         "phpro/grumphp": "^0.13.1"
     },
+    "autoload": {
+        "psr-4": {
+          "WordPressWidgetBoilerplate\\": "src/",
+          "WordPressWidgetBoilerplate\\Utilities\\": "src/Utilities/"
+        }
+      },
     "scripts": {
       "test": [
         "./vendor/bin/grumphp run"
