@@ -41,7 +41,9 @@
     "autoload": {
         "psr-4": {
           "WordPressWidgetBoilerplate\\": "src/",
-          "WordPressWidgetBoilerplate\\Utilities\\": "src/Utilities/"
+          "WordPressWidgetBoilerplate\\Utilities\\": "src/Utilities/",
+          "WordPressWidgetBoilerplate\\Subscriber\\": "src/Subscriber/",
+          "WordPressWidgetBoilerplate\\WordPress\\": "src/WordPress/"
         }
       },
     "scripts": {
