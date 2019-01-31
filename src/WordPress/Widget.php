@@ -8,7 +8,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace WordPressWidgetBoilerplate\API;
+namespace WordPressWidgetBoilerplate\WordPress;
 
 use WP_Widget;
 
