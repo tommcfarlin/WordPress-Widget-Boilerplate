@@ -28,7 +28,6 @@ class Widget extends WP_Widget
     {
         $this->widgetSlug = $widgetSlug;
 
-        // TODO: update description
         parent::__construct(
             $this->getWidgetSlug(),
             __('Widget Name', $this->getWidgetSlug()),
@@ -47,16 +46,5 @@ class Widget extends WP_Widget
     public function getWidgetSlug()
     {
         return $this->widgetSlug;
-    }
-
-    /**
-     * TODO: This is a temporary message to show that the Boilerplate has loaded.
-     */
-    public function load()
-    {
-        $html = '<p style="text-align:center; background: #fff; padding: 1em; border: 1px dotted gray; margin: 2em 2em 2em 14em;">';
-        $html .= 'The Widget Boilerplate is loaded.';
-        $html .= '</p>';
-        echo $html;
     }
 }

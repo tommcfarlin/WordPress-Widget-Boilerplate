@@ -10,10 +10,14 @@
 
 namespace WordPressWidgetBoilerplate\Subscriber;
 
+use WordPressWidgetBoilerplate\WordPress\Widget;
+
 /**
- * The subscriber responsible for loading the stylesheet on the blog.
+ * Initializes the core Widget class that's used by WordPress to instantiate the widget,
+ * renders the administrative area, provide serialization functionality, and displays the
+ * public-facing view.
  */
-class PublicStyleAssetSubscriber extends AbstractSubscriber
+class WidgetSubscriber extends AbstractSubscriber
 {
     /**
      * {@inheritdoc}
@@ -24,17 +28,10 @@ class PublicStyleAssetSubscriber extends AbstractSubscriber
     }
 
     /**
-     * Adds the stylesheet to the public-facing side of the site.
+     * Registers the core Widget class using the WordPress APIs.
      */
     public function load()
     {
-        if (is_admin()) {
-            return;
-        }
-
-        wp_enqueue_style(
-            'wordpress-widget-boilerplate',
-            plugin_dir_url(\dirname(__DIR__)).'assets/css/widget.css'
-        );
+        register_widget(new Widget('widget-name'));
     }
 }

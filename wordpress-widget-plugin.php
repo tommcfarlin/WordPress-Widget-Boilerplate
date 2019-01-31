@@ -28,7 +28,7 @@ namespace WordPressWidgetBoilerplate;
 
 use WordPressWidgetBoilerplate\Utilities\Registry;
 use WordPressWidgetBoilerplate\Plugin;
-use WordPressWidgetBoilerplate\API\Widget;
+use WordPressWidgetBoilerplate\Subscriber\WidgetSubscriber;
 
 // Prevent this file from being called directly.
 defined('WPINC') || die;
@@ -43,7 +43,7 @@ add_filter('wpwBoilerplateRegistry', function () use ($registry) {
 });
 
 // Add the Widget base class to the Registry.
-$registry->add('widget', new Widget('widget-name'));
+$registry->add('widgetSubscriber', new WidgetSubscriber('widgets_init'));
 
 // Start the machine.
 (new Plugin($registry))->start();
