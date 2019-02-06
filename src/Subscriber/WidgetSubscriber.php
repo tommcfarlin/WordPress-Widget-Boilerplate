@@ -11,6 +11,7 @@
 namespace WordPressWidgetBoilerplate\Subscriber;
 
 use WordPressWidgetBoilerplate\WordPress\Widget;
+use WordPressWidgetBoilerplate\WordPress\WidgetAdmin;
 
 /**
  * Initializes the core Widget class that's used by WordPress to instantiate the widget,
@@ -32,6 +33,6 @@ class WidgetSubscriber extends AbstractSubscriber
      */
     public function load()
     {
-        register_widget(new Widget('widget-name'));
+        register_widget(new WidgetAdmin('widget-name'));
     }
 }
