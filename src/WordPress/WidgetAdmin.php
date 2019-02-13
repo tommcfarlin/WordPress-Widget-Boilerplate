@@ -21,6 +21,7 @@ class WidgetAdmin extends Widget
     public function __construct($widgetSlug)
     {
         parent::__construct($widgetSlug);
+        $this->widgetSerializer = new WidgetSerializer();
     }
 
     /**

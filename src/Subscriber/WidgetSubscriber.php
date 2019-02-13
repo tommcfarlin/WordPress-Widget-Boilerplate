@@ -33,6 +33,10 @@ class WidgetSubscriber extends AbstractSubscriber
      */
     public function load()
     {
-        register_widget(new WidgetAdmin('widget-name'));
+        register_widget(
+            new WidgetAdmin(
+                'widget-name'
+            )
+        );
     }
 }
