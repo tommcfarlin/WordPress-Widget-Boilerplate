@@ -74,6 +74,17 @@ class Widget extends WP_Widget
     }
 
     /**
+     * Displays the widget based on the contents of the included template.
+     *
+     * @param array $args     argument provided by WordPress that may be useful in rendering the widget
+     * @param array $instance the values of the widget
+     */
+    public function widget($args, $instance)
+    {
+        return $this->widgetDisplay->show($args, $instance);
+    }
+
+    /**
      * If the value for the key exists in the current instance of the widget, then it will
      * retrieve it. Otherwise, it will return an empty value.
      *
