@@ -16,6 +16,21 @@ namespace WordPressWidgetBoilerplate\WordPress;
 class WidgetSerializer
 {
     /**
+     * @var string a reference to the slug of the widget to which the serialier is associated
+     */
+    private $widgetSlug;
+
+    /**
+     * Initializes the class.
+     *
+     * @param string a reference to the slug of the widget to which the serialier is associated
+     */
+    public function __construct(string $widgetSlug)
+    {
+        $this->widgetSlug = $widgetSlug;
+    }
+
+    /**
      * Updates the values of the widget. Sanitizes the information before saving it.
      *
      * @param array $newInstance the array of new options to save
@@ -28,7 +43,9 @@ class WidgetSerializer
                 stripslashes($value)
             );
         }
-        error_log(print_r($instance, true));
+
+        do_action('flush_widget_cache', [$this->widgetSlug, 'widget']);
+
         return $instance;
     }
 }
