@@ -22,8 +22,7 @@ class Widget extends WP_Widget
     /**
      * Initializes the plugin by setting its properties and calling the parent class with the description.
      *
-     * @param string           $widgetSlug       unique identifier for your widget
-     * @param WidgetSerializer $widgetSerializer the class responsible for saving widget options
+     * @param string $widgetSlug unique identifier for your widget
      */
     public function __construct($widgetSlug)
     {
@@ -54,6 +53,8 @@ class Widget extends WP_Widget
      * for the instance of the widget as arguments passed into the function.
      *
      * @param array $instance the options for the instance of this widget
+     *
+     * @SuppressWarnings("unused")
      */
     public function form($instance)
     {
