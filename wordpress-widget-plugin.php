@@ -29,6 +29,7 @@ namespace WordPressWidgetBoilerplate;
 use WordPressWidgetBoilerplate\Utilities\Registry;
 use WordPressWidgetBoilerplate\Plugin;
 use WordPressWidgetBoilerplate\Subscriber\WidgetSubscriber;
+use WordPressWidgetBoilerplate\Subscriber\DeleteWidgetCacheSubscriber;
 
 // Prevent this file from being called directly.
 defined('WPINC') || die;
@@ -41,6 +42,9 @@ $registry = new Registry();
 add_filter('wpwBoilerplateRegistry', function () use ($registry) {
     return $registry;
 });
+
+// Add subscribers.
+$registry->add('deleteWidgetCacheSubscriber', new DeleteWidgetCacheSubscriber('flush_widget_cache'));
 
 // Add the Widget base class to the Registry.
 $registry->add('widgetSubscriber', new WidgetSubscriber('widgets_init'));
