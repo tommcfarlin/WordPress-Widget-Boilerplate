@@ -8,8 +8,14 @@
  * with this source code in the file LICENSE.
  */
 ?>
+
+<?php if (empty($instance['title']) && empty($instance['content'])) :
+    return;
+endif; ?>
+
 <div id="<?php echo $args['id']; ?>">
-    <h3 class="widget-title"><?php echo $instance['title']; ?></h3>
+    <?php if ('on' === $instance['display-title']) : ?>
+        <h3 class="widget-title"><?php echo $instance['title']; ?></h3>
+    <?php endif; ?>
     <p><?php echo $instance['content']; ?></p>
-    <pre><?php echo $instance['display-title']; ?></pre>
 </div><!-- #<?php echo $args['id']; ?>-->
