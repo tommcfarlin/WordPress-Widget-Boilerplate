@@ -14,7 +14,7 @@
 endif; ?>
 
 <div id="<?php echo $args['id']; ?>">
-    <?php if ('on' === $instance['display-title']) : ?>
+    <?php if (isset($instance['display-title']) && 'on' === $instance['display-title']) : ?>
         <h3 class="widget-title"><?php echo $instance['title']; ?></h3>
     <?php endif; ?>
     <p><?php echo $instance['content']; ?></p>

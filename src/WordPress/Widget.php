@@ -81,6 +81,12 @@ class Widget extends WP_Widget
      */
     public function widget($args, $instance)
     {
+        // Get a cached version of the widget. If it's empty, cache what we
+        $cache = $this->getCachedWidget();
+        if (empty($cache)) {
+            $this->cacheWidget($args, $instance);
+        }
+
         return $this->widgetDisplay->show($args, $instance);
     }
 
@@ -94,5 +100,36 @@ class Widget extends WP_Widget
     protected function get($key, $instance)
     {
         return empty($instance[$key]) ? '' : $instance[$key];
+    }
+
+    /**
+     * @return array the cached instance of this widget if it's not empty.
+     */
+    private function getCachedWidget()
+    {
+        $cache = wp_cache_get($this->getWidgetSlug(), 'widget');
+        if (!empty($cache)) {
+            return $cache;
+        }
+        return [];
+    }
+
+    /**
+     * Caches the values for the instance of this widget.
+     *
+     * @param array $args     argument provided by WordPress that may be useful in rendering the widget
+     * @param array $instance the values of the widget
+     */
+    private function cacheWidget($args, $instance)
+    {
+        $cache = [];
+        $cache['widget_id'] = $args['widget_id'];
+        $cache['title'] = empty($instance['title']) ? '' : $instance['title'];
+        $cache['content'] = empty($instance['content']) ? '' : $instance['content'];
+
+        $instance['display-title'] = isset($instance['display-title']) ? $instance['display-title'] : '';
+        $cache['display-title'] = $instance['display-title'];
+
+        wp_cache_set($this->getWidgetSlug(), $cache, 'widget');
     }
 }
