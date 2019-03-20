@@ -35,6 +35,8 @@ class WidgetDisplay
      *
      * @param array $args     argument provided by WordPress that may be useful in rendering the widget
      * @param array $instance the values of the widget
+     *
+     * @SuppressWarnings("unused")
      */
     public function show($args, $instance)
     {

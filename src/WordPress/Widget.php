@@ -103,7 +103,7 @@ class Widget extends WP_Widget
     }
 
     /**
-     * @return array the cached instance of this widget if it's not empty.
+     * @return array the cached instance of this widget if it's not empty
      */
     private function getCachedWidget()
     {
@@ -111,6 +111,7 @@ class Widget extends WP_Widget
         if (!empty($cache)) {
             return $cache;
         }
+
         return [];
     }
 
