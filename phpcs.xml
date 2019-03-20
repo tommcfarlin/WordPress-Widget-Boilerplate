@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ruleset name="Pressware">
+    <description>Pressware, LLC Coding Standards</description>
+
+    <!-- Scan all files in directory -->
+    <file>./src</file>
+    <!-- Scan only PHP files -->
+    <arg name="extensions" value="php"/>
+
+    <!-- Show colors in console -->
+    <arg value="-colors"/>
+
+    <!-- Show sniff codes in all reports -->
+    <arg value="ns"/>
+
+    <!-- Use PSR-2 as a base -->
+    <rule ref="PSR2"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found" />
+
+    <!-- Force 2 spaces indentation -->
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="indent" value="4"/>
+            <property name="tabIndent" value="false"/>
+        </properties>
+    </rule>>
+</ruleset>

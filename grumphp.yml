@@ -1,0 +1,32 @@
+parameters:
+    git_dir: .
+    bin_dir: vendor/bin
+    process_timeout: 120
+    tasks:
+      securitychecker:
+      composer:
+      jsonlint:
+      xmllint:
+      yamllint:
+      phplint:
+        exclude:
+          - vendor/
+      phpcs:
+        metadata:
+          priority: 200
+      phpcsfixer2:
+        allow_risky: true
+        config: '.php_cs.dist'
+        metadata:
+          priority: 300
+      phpparser:
+        visitors:
+          forbidden_function_calls:
+            blacklist:
+              - "exit"
+              - "var_dump"
+      phpversion:
+        project: '7.1'
+      phpmd:
+        exclude: ['vendor']
+        ruleset: ['phpmd.xml']

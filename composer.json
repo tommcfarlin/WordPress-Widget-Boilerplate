@@ -1,0 +1,55 @@
+{
+    "name": "wordpress-widget-boilerplate/wordpress-widget-boilerplate",
+    "description": "An organized, maintainable boilerplate for building widgets using WordPress best practices.",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://github.com/tommcfarlin/WordPress-Widget-Boilerplate",
+    "authors": [
+      {
+        "name": "Tom McFarlin",
+        "email": "tom@pressware.co",
+        "homepage": "https://pressware.co"
+      }
+    ],
+    "support": {
+      "issues": "https://github.com/tommcfarlin/WordPress-Widget-Boilerplate/issues"
+    },
+    "config": {
+      "preferred-install": "dist",
+      "platform": {
+          "php": "7.1"
+      }
+    },
+    "repositories": [
+      {
+        "type": "composer",
+        "url": "https://wpackagist.org"
+      }
+    ],
+    "require": {
+      "php": "7.1",
+      "composer/installers": "^1.4"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.13.1",
+        "jakub-onderka/php-parallel-lint": "^1.0.0",
+        "phpmd/phpmd": "^v2.6.0",
+        "nikic/php-parser": "^4.0",
+        "ocramius/proxy-manager": "^2.0.0",
+        "phpro/grumphp": "^0.13.1"
+    },
+    "autoload": {
+        "psr-4": {
+          "WordPressWidgetBoilerplate\\": "src/",
+          "WordPressWidgetBoilerplate\\Utilities\\": "src/Utilities/",
+          "WordPressWidgetBoilerplate\\Subscriber\\": "src/Subscriber/",
+          "WordPressWidgetBoilerplate\\WordPress\\": "src/WordPress/"
+        }
+      },
+    "scripts": {
+      "test": [
+        "./vendor/bin/grumphp run"
+      ]
+    },
+    "minimum-stability": "stable"
+  }
