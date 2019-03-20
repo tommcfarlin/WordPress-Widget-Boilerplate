@@ -9,19 +9,19 @@
  * @author    Your Name <email@example.com>
  * @license   GPL-3.0+
  * @link      http://example.com
- * @copyright 2018 - 2019 Your Name or Company Name
+ * @copyright 2011 - 2019 Your Name or Company Name
  *
  * @wordpress-plugin
  * Plugin Name:       WordPress Widget Boilerplate
  * Plugin URI:        https://github.com/tommcfarlin/wordpress-widget-boilerplate
  * Description:       An object-oriented foundation for building WordPress Widgets.
- * Version:           1.0.0
+ * Version:           2.0.0
  * Author:            Tom McFarlin
  * Author URI:        https://tommcfarlin.com
  * Text Domain:       widget-name
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
- * Domain Path:       /lang
+ * Domain Path:       /languages
  */
 
 namespace WordPressWidgetBoilerplate;
